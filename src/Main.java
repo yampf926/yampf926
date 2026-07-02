@@ -308,10 +308,6 @@ public class Main {
         return String.join(" ", categories);
     }
 
-    private static String sourceUrl(Project project) {
-        return "https://github.com/yampf926/yampf926";
-    }
-
     private static String buildHtml() {
         StringBuilder cards = new StringBuilder();
         for (Project project : PROJECTS) {
@@ -329,7 +325,6 @@ public class Main {
                             </details>
                             <div class="card-actions">
                                 <button class="local-run" type="button" data-run="%s">로컬 실행</button>
-                                <a class="source" href="%s" target="_blank" rel="noreferrer">GitHub 보기</a>
                                 <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
                             </div>
                         </div>
@@ -346,7 +341,6 @@ public class Main {
                     project.tech(),
                     project.detail(),
                     project.id(),
-                    sourceUrl(project),
                     project.id()
             ));
         }
@@ -804,10 +798,11 @@ public class Main {
                             width: fit-content;
                             max-width: 100%%;
                             margin-bottom: 13px;
-                            border-radius: 999px;
+                            border: 1px solid var(--line);
+                            border-radius: 8px;
                             padding: 7px 11px;
                             color: var(--lavender-deep);
-                            background: linear-gradient(135deg, color-mix(in srgb, var(--project-color) 22%%, white), #fff0fa);
+                            background: linear-gradient(135deg, #ffffff, var(--lavender-soft));
                             font-size: 12px;
                             line-height: 1.25;
                             font-weight: 900;
@@ -858,7 +853,7 @@ public class Main {
                         }
                         .card-actions {
                             display: grid;
-                            grid-template-columns: repeat(3, minmax(0, 1fr));
+                            grid-template-columns: repeat(2, minmax(0, 1fr));
                             gap: 10px;
                             margin-top: 20px;
                         }
@@ -892,7 +887,7 @@ public class Main {
                             display: none;
                         }
                         body.public-site .card-actions {
-                            grid-template-columns: repeat(2, minmax(0, 1fr));
+                            grid-template-columns: 1fr;
                         }
                         .card a {
                             border: 1px solid color-mix(in srgb, var(--project-color) 26%%, var(--line));
@@ -919,21 +914,15 @@ public class Main {
                             overflow-wrap: break-word;
                         }
                         .music-panel {
-                            width: min(250px, 100%%);
+                            width: min(220px, 100%%);
                             max-width: 100%%;
                             margin-top: 18px;
                             display: grid;
-                            gap: 8px;
                             border: 1px solid rgba(255, 255, 255, 0.22);
                             border-radius: 8px;
-                            padding: 10px;
+                            padding: 6px;
                             background: rgba(255, 255, 255, 0.10);
                             backdrop-filter: blur(12px);
-                        }
-                        .music-panel strong {
-                            color: rgba(255, 255, 255, 0.9);
-                            font-size: 12px;
-                            line-height: 1.25;
                         }
                         .music-frame {
                             width: 100%%;
@@ -941,12 +930,6 @@ public class Main {
                             border: 0;
                             border-radius: 6px;
                             background: rgba(255, 255, 255, 0.12);
-                        }
-                        .music-status {
-                            min-height: 0;
-                            color: rgba(255, 255, 255, 0.7);
-                            font-size: 12px;
-                            line-height: 1.25;
                         }
                         .note-actions {
                             display: flex;
@@ -1048,7 +1031,7 @@ public class Main {
                             .hero { padding: 58px 0 72px; }
                             h1 { font-size: 38px; }
                             .music-panel {
-                                width: min(280px, 100%%);
+                                width: min(220px, 100%%);
                             }
                             .toolbar,
                             .stats { grid-template-columns: 1fr; }
@@ -1076,10 +1059,8 @@ public class Main {
                             <div class="eyebrow">Published Portfolio</div>
                             <h1>박서영의 작업 공간</h1>
                             <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리함.</p>
-                            <div class="music-panel" aria-label="배경 음악 링크">
-                                <strong>BGM · I'll Always love you - 민기</strong>
+                            <div class="music-panel" aria-label="배경 음악">
                                 <iframe class="music-frame" src="https://www.youtube.com/embed/zD39SFYfKNE?rel=0" title="민기(MK) - I'll always love you" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                <div class="music-status">페이지 안에서 재생 가능함.</div>
                             </div>
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
