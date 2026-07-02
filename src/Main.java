@@ -139,8 +139,7 @@ public class Main {
         String classPath = "out;src;assets;images;data";
 
         if ("yutnori".equals(project.id())) {
-            compileCommand = "javac -encoding UTF-8 -d out head_Main.java";
-            classPath = "out;.;assets;images;data";
+            return yutnoriLauncher(project, directory);
         }
 
         return """
@@ -189,6 +188,41 @@ public class Main {
                 )
                 pause
                 """.formatted(project.title(), project.title(), directory, directory, directory, project.title(), compileCommand, project.title(), classPath);
+    }
+
+    private static String yutnoriLauncher(Project project, Path directory) {
+        Path runScript = directory.resolve("run.bat");
+        return """
+                @echo off
+                chcp 65001 > nul
+                title yampf926 - %s
+                echo.
+                echo [%s]
+                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 함.
+                echo.
+                if not exist "%s" (
+                    echo 프로젝트 폴더를 찾지 못함.
+                    echo %s
+                    echo.
+                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없음.
+                    pause
+                    exit /b 1
+                )
+                if not exist "%s" (
+                    echo 윷놀이 실행 스크립트를 찾지 못함.
+                    echo %s
+                    pause
+                    exit /b 1
+                )
+                cd /d "%s"
+                echo 개별 실행과 같은 run.bat으로 윷놀이를 실행함.
+                call "%s"
+                if errorlevel 1 (
+                    echo.
+                    echo 실행 실패함. 위 오류 내용 확인 필요.
+                )
+                pause
+                """.formatted(project.title(), project.title(), directory, directory, runScript, runScript, directory, runScript);
     }
 
     private static String normalizeBatch(String script) {

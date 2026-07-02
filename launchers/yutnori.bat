@@ -13,30 +13,15 @@ if not exist "C:\Users\KOSMO\IdeaProjects\yampf926\src\yutnori" (
     pause
     exit /b 1
 )
-where java > nul 2> nul
-if errorlevel 1 (
-    echo java를 찾지 못함. JDK 설치 후 다시 실행하면 됨.
-    pause
-    exit /b 1
-)
-where javac > nul 2> nul
-if errorlevel 1 (
-    echo javac를 찾지 못함. JRE가 아니라 JDK가 필요함.
+if not exist "C:\Users\KOSMO\IdeaProjects\yampf926\src\yutnori\run.bat" (
+    echo 윷놀이 실행 스크립트를 찾지 못함.
+    echo C:\Users\KOSMO\IdeaProjects\yampf926\src\yutnori\run.bat
     pause
     exit /b 1
 )
 cd /d "C:\Users\KOSMO\IdeaProjects\yampf926\src\yutnori"
-echo 윷놀이 컴파일 중...
-if not exist out mkdir out
-javac -encoding UTF-8 -d out head_Main.java
-if errorlevel 1 (
-    echo.
-    echo 컴파일 실패함.
-    pause
-    exit /b 1
-)
-echo 윷놀이 실행 중...
-java -cp "out;.;assets;images;data" Main
+echo 개별 실행과 같은 run.bat으로 윷놀이를 실행함.
+call "C:\Users\KOSMO\IdeaProjects\yampf926\src\yutnori\run.bat"
 if errorlevel 1 (
     echo.
     echo 실행 실패함. 위 오류 내용 확인 필요.
