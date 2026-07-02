@@ -509,6 +509,9 @@
             gap: 10px;
             margin-top: 20px;
         }
+        .card-actions.single-action {
+            grid-template-columns: 1fr;
+        }
         button,
         .card a {
             min-width: 0;
@@ -719,7 +722,7 @@
                 <div class="feature-copy">
                     <small>Featured</small>
                     <h2>웹과 Java 프로젝트 허브</h2>
-                    <p>공개 페이지에서는 프로젝트 소개와 실행 파일 다운로드를 제공하고, 로컬 환경에서는 Java 작업을 바로 실행할 수 있음.</p>
+                    <p>웹 프로젝트는 공개 페이지에서 바로 열고, Java 작업은 로컬 환경에서 실행할 수 있음.</p>
                 </div>
                 <div class="feature-art" aria-hidden="true"></div>
             </div>
@@ -754,7 +757,7 @@
             </div>
             <div class="result-meta" id="resultMeta">전체 프로젝트 8개 표시 중.</div>
             <div class="note">
-                바로 실행은 yampf926 폴더에 파일이 있는 것만으로 동작하지 않음. 먼저 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤, 공개 페이지의 바로 실행 버튼을 누르면 됨.
+                Dohwa와 보드게임 컬렉션은 GitHub Pages 공개 주소로 바로 열림. Java 게임과 앱의 바로 실행은 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤 사용할 수 있음.
                 <div class="note-actions">
                     <button class="guide-button" id="openRunGuide" type="button">로컬 실행 방법</button>
                 </div>
@@ -771,27 +774,27 @@
             <summary>상세 보기</summary>
             <p>프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성</p>
         </details>
-        <div class="card-actions">
-            <button class="local-run" type="button" data-run="dohwa">바로 실행</button>
-            <a class="download" href="launchers/dohwa.bat">배치파일 다운로드</a>
-        </div>
+        <div class="card-actions single-action">
+    <a class="local-run" href="dohwa/" target="_blank" rel="noopener">바로 실행</a>
+</div>
+
     </div>
 </article>
-<article class="card" style="--project-color:#73d7ff" data-title="보드게임 컬렉션" data-type="웹 프로젝트" data-categories="web java game">
+<article class="card" style="--project-color:#73d7ff" data-title="보드게임 컬렉션" data-type="웹 프로젝트" data-categories="web game">
     <div class="thumb"><span>GAME</span></div>
     <div class="card-body">
         <span class="tag">웹 프로젝트</span>
         <h3>보드게임 컬렉션</h3>
-        <p>Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션</p>
-        <div class="tech">Java HttpServer · HTML · JavaScript</div>
+        <p>브라우저에서 바로 실행되는 보드게임 컬렉션</p>
+        <div class="tech">HTML · CSS · JavaScript</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
             <p>회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성</p>
         </details>
-        <div class="card-actions">
-            <button class="local-run" type="button" data-run="game">바로 실행</button>
-            <a class="download" href="launchers/game.bat">배치파일 다운로드</a>
-        </div>
+        <div class="card-actions single-action">
+    <a class="local-run" href="boardgame/" target="_blank" rel="noopener">바로 실행</a>
+</div>
+
     </div>
 </article>
 <article class="card" style="--project-color:#ff8fcb" data-title="비주얼 노벨 게임" data-type="java 게임" data-categories="java game">
@@ -806,9 +809,10 @@
             <p>장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="choice">바로 실행</button>
-            <a class="download" href="launchers/choice.bat">배치파일 다운로드</a>
-        </div>
+    <button class="local-run" type="button" data-run="choice">바로 실행</button>
+    <a class="download" href="launchers/choice.bat">배치파일 다운로드</a>
+</div>
+
     </div>
 </article>
 <article class="card" style="--project-color:#ffd56a" data-title="탈출 게임" data-type="java 게임" data-categories="java game">
@@ -823,9 +827,10 @@
             <p>방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="escape">바로 실행</button>
-            <a class="download" href="launchers/escape.bat">배치파일 다운로드</a>
-        </div>
+    <button class="local-run" type="button" data-run="escape">바로 실행</button>
+    <a class="download" href="launchers/escape.bat">배치파일 다운로드</a>
+</div>
+
     </div>
 </article>
 <article class="card" style="--project-color:#a56dff" data-title="슈팅 게임" data-type="java 게임" data-categories="java game">
@@ -840,9 +845,10 @@
             <p>플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="shooting">바로 실행</button>
-            <a class="download" href="launchers/shooting.bat">배치파일 다운로드</a>
-        </div>
+    <button class="local-run" type="button" data-run="shooting">바로 실행</button>
+    <a class="download" href="launchers/shooting.bat">배치파일 다운로드</a>
+</div>
+
     </div>
 </article>
 <article class="card" style="--project-color:#8bdc9b" data-title="스도쿠" data-type="java 게임" data-categories="java game">
@@ -857,9 +863,10 @@
             <p>퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="sudoku">바로 실행</button>
-            <a class="download" href="launchers/sudoku.bat">배치파일 다운로드</a>
-        </div>
+    <button class="local-run" type="button" data-run="sudoku">바로 실행</button>
+    <a class="download" href="launchers/sudoku.bat">배치파일 다운로드</a>
+</div>
+
     </div>
 </article>
 <article class="card" style="--project-color:#ffb86b" data-title="윷놀이" data-type="java 게임" data-categories="java game">
@@ -874,9 +881,10 @@
             <p>말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="yutnori">바로 실행</button>
-            <a class="download" href="launchers/yutnori.bat">배치파일 다운로드</a>
-        </div>
+    <button class="local-run" type="button" data-run="yutnori">바로 실행</button>
+    <a class="download" href="launchers/yutnori.bat">배치파일 다운로드</a>
+</div>
+
     </div>
 </article>
 <article class="card" style="--project-color:#7dd3fc" data-title="캘린더/가계부" data-type="java 앱" data-categories="java">
@@ -891,9 +899,10 @@
             <p>달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="calendar">바로 실행</button>
-            <a class="download" href="launchers/calendar.bat">배치파일 다운로드</a>
-        </div>
+    <button class="local-run" type="button" data-run="calendar">바로 실행</button>
+    <a class="download" href="launchers/calendar.bat">배치파일 다운로드</a>
+</div>
+
     </div>
 </article>
 
@@ -906,11 +915,11 @@
         <div class="modal-panel">
             <h2 id="runGuideTitle">로컬 실행 방법</h2>
             <ol>
-                <li>IntelliJ에서 yampf926 프로젝트를 엶.</li>
-                <li>src/Main.java를 실행해 로컬 실행 서버를 켬.</li>
-                <li>서버는 http://localhost:9260 에서만 열림.</li>
-                <li>공개 페이지에서 바로 실행 버튼을 누르면 이 서버가 launchers 폴더의 실행 파일을 실행함.</li>
-                <li>서버가 꺼져 있으면 localhost 연결 실패가 표시됨.</li>
+                <li>Dohwa와 보드게임 컬렉션은 공개 페이지에서 바로 열림.</li>
+                <li>Java 게임과 앱은 IntelliJ에서 yampf926 프로젝트를 연 뒤 src/Main.java를 실행함.</li>
+                <li>로컬 실행 서버는 http://localhost:9260 에서만 열림.</li>
+                <li>Java 카드의 바로 실행 버튼을 누르면 이 서버가 launchers 폴더의 실행 파일을 실행함.</li>
+                <li>서버가 꺼져 있으면 Java 카드에서 localhost 연결 실패가 표시됨.</li>
             </ol>
             <button id="closeRunGuide" type="button">닫기</button>
         </div>

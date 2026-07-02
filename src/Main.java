@@ -26,19 +26,20 @@ public class Main {
             String tech,
             String folder,
             String accent,
-            boolean webProject
+            boolean webProject,
+            String liveUrl
     ) {
     }
 
     private static final List<Project> PROJECTS = List.of(
-            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹페이지", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
-            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
-            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
-            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
-            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
-            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
-            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
-            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
+            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹페이지", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true, "dohwa/"),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "브라우저에서 바로 실행되는 보드게임 컬렉션", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성", "HTML · CSS · JavaScript", "src\\Game", "#73d7ff", true, "boardgame/"),
+            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false, ""),
+            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false, ""),
+            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false, ""),
+            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false, ""),
+            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false, ""),
+            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false, "")
     );
 
     public static void main(String[] args) throws IOException {
@@ -85,7 +86,7 @@ public class Main {
 
         for (Project project : PROJECTS) {
             Path launcher = launcherPath(project);
-            String script = project.webProject()
+            String script = "dohwa".equals(project.id())
                     ? webLauncher(project)
                     : javaLauncher(project);
             Files.writeString(launcher, normalizeBatch(script), StandardCharsets.UTF_8);
@@ -333,10 +334,7 @@ public class Main {
                                 <summary>상세 보기</summary>
                                 <p>%s</p>
                             </details>
-                            <div class="card-actions">
-                                <button class="local-run" type="button" data-run="%s">바로 실행</button>
-                                <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
-                            </div>
+                            %s
                         </div>
                     </article>
                     """.formatted(
@@ -350,8 +348,7 @@ public class Main {
                     project.description(),
                     project.tech(),
                     project.detail(),
-                    project.id(),
-                    project.id()
+                    actionHtml(project)
             ));
         }
 
@@ -867,6 +864,9 @@ public class Main {
                             gap: 10px;
                             margin-top: 20px;
                         }
+                        .card-actions.single-action {
+                            grid-template-columns: 1fr;
+                        }
                         button,
                         .card a {
                             min-width: 0;
@@ -1077,7 +1077,7 @@ public class Main {
                                 <div class="feature-copy">
                                     <small>Featured</small>
                                     <h2>웹과 Java 프로젝트 허브</h2>
-                                    <p>공개 페이지에서는 프로젝트 소개와 실행 파일 다운로드를 제공하고, 로컬 환경에서는 Java 작업을 바로 실행할 수 있음.</p>
+                                    <p>웹 프로젝트는 공개 페이지에서 바로 열고, Java 작업은 로컬 환경에서 실행할 수 있음.</p>
                                 </div>
                                 <div class="feature-art" aria-hidden="true"></div>
                             </div>
@@ -1112,7 +1112,7 @@ public class Main {
                             </div>
                             <div class="result-meta" id="resultMeta">전체 프로젝트 8개 표시 중.</div>
                             <div class="note">
-                                바로 실행은 yampf926 폴더에 파일이 있는 것만으로 동작하지 않음. 먼저 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤, 공개 페이지의 바로 실행 버튼을 누르면 됨.
+                                Dohwa와 보드게임 컬렉션은 GitHub Pages 공개 주소로 바로 열림. Java 게임과 앱의 바로 실행은 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤 사용할 수 있음.
                                 <div class="note-actions">
                                     <button class="guide-button" id="openRunGuide" type="button">로컬 실행 방법</button>
                                 </div>
@@ -1128,11 +1128,11 @@ public class Main {
                         <div class="modal-panel">
                             <h2 id="runGuideTitle">로컬 실행 방법</h2>
                             <ol>
-                                <li>IntelliJ에서 yampf926 프로젝트를 엶.</li>
-                                <li>src/Main.java를 실행해 로컬 실행 서버를 켬.</li>
-                                <li>서버는 http://localhost:9260 에서만 열림.</li>
-                                <li>공개 페이지에서 바로 실행 버튼을 누르면 이 서버가 launchers 폴더의 실행 파일을 실행함.</li>
-                                <li>서버가 꺼져 있으면 localhost 연결 실패가 표시됨.</li>
+                                <li>Dohwa와 보드게임 컬렉션은 공개 페이지에서 바로 열림.</li>
+                                <li>Java 게임과 앱은 IntelliJ에서 yampf926 프로젝트를 연 뒤 src/Main.java를 실행함.</li>
+                                <li>로컬 실행 서버는 http://localhost:9260 에서만 열림.</li>
+                                <li>Java 카드의 바로 실행 버튼을 누르면 이 서버가 launchers 폴더의 실행 파일을 실행함.</li>
+                                <li>서버가 꺼져 있으면 Java 카드에서 localhost 연결 실패가 표시됨.</li>
                             </ol>
                             <button id="closeRunGuide" type="button">닫기</button>
                         </div>
@@ -1263,6 +1263,23 @@ public class Main {
                 </body>
                 </html>
                 """.replace("%%", "%").replace("__PROJECT_CARDS__", cards.toString());
+    }
+
+    private static String actionHtml(Project project) {
+        if (!project.liveUrl().isBlank()) {
+            return """
+                    <div class="card-actions single-action">
+                        <a class="local-run" href="%s" target="_blank" rel="noopener">바로 실행</a>
+                    </div>
+                    """.formatted(project.liveUrl());
+        }
+
+        return """
+                <div class="card-actions">
+                    <button class="local-run" type="button" data-run="%s">바로 실행</button>
+                    <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
+                </div>
+                """.formatted(project.id(), project.id());
     }
 
     private static void send(HttpExchange exchange, int status, String body, String contentType) throws IOException {
