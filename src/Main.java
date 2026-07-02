@@ -222,6 +222,22 @@ public class Main {
             return;
         }
 
+        String path = exchange.getRequestURI().getPath();
+        if ("/favicon.png".equals(path)) {
+            sendFile(exchange, ROOT.resolve("favicon.png"), "image/png");
+            return;
+        }
+        if (path.startsWith("/assets/")) {
+            Path asset = ROOT.resolve(path.substring(1)).normalize();
+            Path assetRoot = ROOT.resolve("assets").normalize();
+            if (!asset.startsWith(assetRoot)) {
+                exchange.sendResponseHeaders(404, -1);
+                return;
+            }
+            sendFile(exchange, asset, contentType(asset));
+            return;
+        }
+
         send(exchange, 200, buildHtml(), "text/html; charset=UTF-8");
     }
 
@@ -350,6 +366,8 @@ public class Main {
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>박서영의 작업 공간</title>
+                    <link rel="icon" type="image/png" href="favicon.png">
+                    <link rel="shortcut icon" type="image/png" href="favicon.png">
                     <style>
                         * { box-sizing: border-box; }
                         :root {
@@ -908,6 +926,74 @@ public class Main {
                             word-break: keep-all;
                             overflow-wrap: break-word;
                         }
+                        .music-panel {
+                            margin-top: 22px;
+                            display: grid;
+                            gap: 8px;
+                            max-width: 520px;
+                        }
+                        .music-panel strong {
+                            color: white;
+                            font-size: 14px;
+                        }
+                        .music-panel audio {
+                            width: 100%%;
+                            max-width: 460px;
+                            min-height: 42px;
+                            border-radius: 8px;
+                        }
+                        .music-status {
+                            min-height: 18px;
+                            color: rgba(255, 255, 255, 0.76);
+                            font-size: 12px;
+                            line-height: 1.45;
+                        }
+                        .note-actions {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                            margin-top: 14px;
+                        }
+                        .guide-button {
+                            width: fit-content;
+                            min-height: 38px;
+                            border-radius: 8px;
+                            padding: 8px 12px;
+                            font-size: 13px;
+                        }
+                        .modal {
+                            position: fixed;
+                            inset: 0;
+                            z-index: 30;
+                            display: none;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 24px;
+                            background: rgba(23, 32, 42, 0.48);
+                        }
+                        .modal.show {
+                            display: flex;
+                        }
+                        .modal-panel {
+                            width: min(520px, 100%%);
+                            border-radius: 8px;
+                            border: 1px solid var(--line);
+                            background: white;
+                            box-shadow: var(--shadow);
+                            padding: 22px;
+                        }
+                        .modal-panel h2 {
+                            margin-bottom: 12px;
+                        }
+                        .modal-panel ol {
+                            margin: 0;
+                            padding-left: 22px;
+                            color: var(--muted);
+                            line-height: 1.75;
+                        }
+                        .modal-panel button {
+                            margin-top: 18px;
+                        }
                         footer {
                             margin-top: 48px;
                             color: white;
@@ -966,6 +1052,7 @@ public class Main {
                             .filters { justify-content: flex-start; }
                             .grid { grid-template-columns: 1fr; }
                             .card-actions { grid-template-columns: 1fr; }
+                            body.public-site .card-actions { grid-template-columns: 1fr; }
                             .footer-inner { grid-template-columns: 1fr; }
                             .footer-box {
                                 border-left: 0;
@@ -986,6 +1073,13 @@ public class Main {
                             <div class="eyebrow">Published Portfolio</div>
                             <h1>박서영의 작업 공간</h1>
                             <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리함.</p>
+                            <div class="music-panel" aria-label="배경 음악">
+                                <strong>I'll Always love you - 민기</strong>
+                                <audio id="bgm" controls autoplay loop preload="metadata">
+                                    <source src="assets/ill-always-love-you-mingi.mp3" type="audio/mpeg">
+                                </audio>
+                                <div class="music-status" id="musicStatus">브라우저 정책에 따라 자동 재생이 막히면 재생 버튼을 누르면 됨.</div>
+                            </div>
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
                             </div>
@@ -1032,13 +1126,31 @@ public class Main {
                                 <button class="reset-filter" id="resetFilter" type="button">초기화</button>
                             </div>
                             <div class="result-meta" id="resultMeta">전체 프로젝트 8개 표시 중.</div>
-                            <div class="note">공개 웹사이트에서는 보안상 방문자 PC에서 Java 프로그램을 직접 실행할 수 없음. 소스는 GitHub에서 확인하고, 실행 스크립트는 프로젝트 폴더가 있는 로컬 PC에서 사용하면 됨.</div>
+                            <div class="note">
+                                공개 웹사이트에서는 보안상 방문자 PC에서 Java 프로그램을 직접 실행할 수 없음. 소스는 GitHub에서 확인하고, 실행 스크립트는 프로젝트 폴더가 있는 로컬 PC에서 사용하면 됨.
+                                <div class="note-actions">
+                                    <button class="guide-button" id="openRunGuide" type="button">로컬 실행 방법</button>
+                                </div>
+                            </div>
                             <div class="grid">
                                 %s
                             </div>
                             <div class="no-results" id="noResults">조건에 맞는 프로젝트 없음.</div>
                         </section>
                     </main>
+
+                    <div class="modal" id="runGuide" role="dialog" aria-modal="true" aria-labelledby="runGuideTitle">
+                        <div class="modal-panel">
+                            <h2 id="runGuideTitle">로컬 실행 방법</h2>
+                            <ol>
+                                <li>GitHub에서 프로젝트를 내려받음.</li>
+                                <li>Java JDK가 설치된 PC에서 프로젝트 폴더를 엶.</li>
+                                <li>필요한 카드의 실행 스크립트를 내려받거나 `launchers` 폴더의 배치파일을 실행함.</li>
+                                <li>웹 프로젝트는 안내된 로컬 주소로 접속하면 됨.</li>
+                            </ol>
+                            <button id="closeRunGuide" type="button">닫기</button>
+                        </div>
+                    </div>
 
                     <footer>
                         <div class="footer-inner">
@@ -1067,6 +1179,11 @@ public class Main {
                         const resetFilter = document.querySelector("#resetFilter");
                         const resultMeta = document.querySelector("#resultMeta");
                         const noResults = document.querySelector("#noResults");
+                        const bgm = document.querySelector("#bgm");
+                        const musicStatus = document.querySelector("#musicStatus");
+                        const runGuide = document.querySelector("#runGuide");
+                        const openRunGuide = document.querySelector("#openRunGuide");
+                        const closeRunGuide = document.querySelector("#closeRunGuide");
                         let activeFilter = "all";
 
                         function applyFilters() {
@@ -1143,6 +1260,33 @@ public class Main {
                                 link.title = "배치파일은 프로젝트 폴더가 있는 로컬 PC에서 실행 가능함.";
                             });
                         }
+
+                        if (bgm) {
+                            bgm.addEventListener("error", () => {
+                                musicStatus.textContent = "음원 파일이 아직 연결되지 않음. assets/ill-always-love-you-mingi.mp3 파일을 추가하면 재생 가능함.";
+                            });
+                            bgm.play().then(() => {
+                                musicStatus.textContent = "재생 중.";
+                            }).catch(() => {
+                                musicStatus.textContent = "자동 재생이 막히면 재생 버튼을 누르면 됨.";
+                            });
+                        }
+
+                        function toggleRunGuide(show) {
+                            runGuide.classList.toggle("show", show);
+                        }
+                        openRunGuide.addEventListener("click", () => toggleRunGuide(true));
+                        closeRunGuide.addEventListener("click", () => toggleRunGuide(false));
+                        runGuide.addEventListener("click", (event) => {
+                            if (event.target === runGuide) {
+                                toggleRunGuide(false);
+                            }
+                        });
+                        document.addEventListener("keydown", (event) => {
+                            if (event.key === "Escape") {
+                                toggleRunGuide(false);
+                            }
+                        });
                     </script>
                 </body>
                 </html>
@@ -1177,5 +1321,32 @@ public class Main {
         try (OutputStream output = exchange.getResponseBody()) {
             output.write(bytes);
         }
+    }
+
+    private static void sendFile(HttpExchange exchange, Path file, String contentType) throws IOException {
+        if (!Files.exists(file) || !Files.isRegularFile(file)) {
+            exchange.sendResponseHeaders(404, -1);
+            return;
+        }
+        byte[] bytes = Files.readAllBytes(file);
+        Headers headers = exchange.getResponseHeaders();
+        headers.set("Content-Type", contentType);
+        headers.set("Cache-Control", "public, max-age=3600");
+        exchange.sendResponseHeaders(200, bytes.length);
+        try (OutputStream output = exchange.getResponseBody()) {
+            output.write(bytes);
+        }
+    }
+
+    private static String contentType(Path file) {
+        String name = file.getFileName().toString().toLowerCase();
+        if (name.endsWith(".mp3")) return "audio/mpeg";
+        if (name.endsWith(".m4a")) return "audio/mp4";
+        if (name.endsWith(".ogg")) return "audio/ogg";
+        if (name.endsWith(".wav")) return "audio/wav";
+        if (name.endsWith(".png")) return "image/png";
+        if (name.endsWith(".jpg") || name.endsWith(".jpeg")) return "image/jpeg";
+        if (name.endsWith(".svg")) return "image/svg+xml";
+        return "application/octet-stream";
     }
 }
