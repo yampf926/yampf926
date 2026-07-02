@@ -565,15 +565,14 @@
             overflow-wrap: break-word;
         }
         .music-panel {
-            width: fit-content;
+            width: min(250px, 100%);
             max-width: 100%;
             margin-top: 18px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            display: grid;
+            gap: 8px;
             border: 1px solid rgba(255, 255, 255, 0.22);
-            border-radius: 999px;
-            padding: 7px 10px 7px 12px;
+            border-radius: 8px;
+            padding: 10px;
             background: rgba(255, 255, 255, 0.10);
             backdrop-filter: blur(12px);
         }
@@ -583,29 +582,17 @@
             line-height: 1.25;
         }
         .music-frame {
-            position: absolute;
-            width: 1px;
-            height: 1px;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             border: 0;
-            opacity: 0;
-            pointer-events: none;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.12);
         }
         .music-status {
             min-height: 0;
             color: rgba(255, 255, 255, 0.7);
             font-size: 12px;
             line-height: 1.25;
-        }
-        .music-status a {
-            min-height: 28px;
-            display: inline-flex;
-            align-items: center;
-            border-radius: 999px;
-            padding: 5px 9px;
-            color: rgba(255, 255, 255, 0.94);
-            background: rgba(255, 255, 255, 0.12);
-            text-decoration: none;
-            font-weight: 900;
         }
         .note-actions {
             display: flex;
@@ -707,9 +694,7 @@
             .hero { padding: 58px 0 72px; }
             h1 { font-size: 38px; }
             .music-panel {
-                align-items: flex-start;
-                border-radius: 8px;
-                flex-direction: column;
+                width: min(280px, 100%);
             }
             .toolbar,
             .stats { grid-template-columns: 1fr; }
@@ -740,7 +725,7 @@
             <div class="music-panel" aria-label="배경 음악 링크">
                 <strong>BGM · I'll Always love you - 민기</strong>
                 <iframe class="music-frame" src="https://www.youtube.com/embed/zD39SFYfKNE?rel=0" title="민기(MK) - I'll always love you" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                <div class="music-status"><a href="https://www.youtube.com/watch?v=zD39SFYfKNE" target="_blank" rel="noreferrer">듣기</a></div>
+                <div class="music-status">페이지 안에서 재생 가능함.</div>
             </div>
             <div class="hero-actions">
                 <a href="#projects">프로젝트 보기</a>
@@ -800,7 +785,7 @@
     <div class="card-body">
         <span class="tag">웹 프로젝트</span>
         <h3>Dohwa 웹사이트</h3>
-        <p>React/Vite로 만든 팬 커뮤니티형 웹 포트폴리오임.</p>
+        <p>React/Vite로 만든 팬 커뮤니티형 웹페이지</p>
         <div class="tech">React · Vite · Spring Boot</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
@@ -818,7 +803,7 @@
     <div class="card-body">
         <span class="tag">웹 프로젝트</span>
         <h3>보드게임 컬렉션</h3>
-        <p>Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션임.</p>
+        <p>Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션</p>
         <div class="tech">Java HttpServer · HTML · JavaScript</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
@@ -836,7 +821,7 @@
     <div class="card-body">
         <span class="tag">Java 게임</span>
         <h3>비주얼 노벨 게임</h3>
-        <p>이미지와 선택지를 사용하는 스토리 진행형 게임임.</p>
+        <p>이미지와 선택지를 사용하는 스토리 진행형 게임</p>
         <div class="tech">Java Swing · JSON 데이터</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
@@ -854,7 +839,7 @@
     <div class="card-body">
         <span class="tag">Java 게임</span>
         <h3>탈출 게임</h3>
-        <p>맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임임.</p>
+        <p>맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임</p>
         <div class="tech">Java Swing · 이미지 리소스</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
@@ -872,7 +857,7 @@
     <div class="card-body">
         <span class="tag">Java 게임</span>
         <h3>슈팅 게임</h3>
-        <p>키보드 조작으로 플레이하는 슈팅 게임임.</p>
+        <p>키보드 조작으로 플레이하는 슈팅 게임</p>
         <div class="tech">Java · 키보드 이벤트</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
@@ -890,7 +875,7 @@
     <div class="card-body">
         <span class="tag">Java 게임</span>
         <h3>스도쿠</h3>
-        <p>숫자 퍼즐을 풀 수 있는 스도쿠 게임임.</p>
+        <p>숫자 퍼즐을 풀 수 있는 스도쿠 게임</p>
         <div class="tech">Java Swing · 퍼즐 로직</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
@@ -908,7 +893,7 @@
     <div class="card-body">
         <span class="tag">Java 게임</span>
         <h3>윷놀이</h3>
-        <p>이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임임.</p>
+        <p>이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임</p>
         <div class="tech">Java · AI 이동 로직</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
@@ -926,7 +911,7 @@
     <div class="card-body">
         <span class="tag">Java 앱</span>
         <h3>캘린더/가계부</h3>
-        <p>일정과 예산을 관리하는 데스크톱 앱임.</p>
+        <p>일정과 예산을 관리하는 데스크톱 앱</p>
         <div class="tech">Java Swing · JSON 저장</div>
         <details class="project-detail">
             <summary>상세 보기</summary>

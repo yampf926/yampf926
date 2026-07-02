@@ -6,13 +6,10 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -35,14 +32,14 @@ public class Main {
     }
 
     private static final List<Project> PROJECTS = List.of(
-            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹 포트폴리오임.", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성함.", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
-            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션임.", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성함.", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
-            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임임.", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조임.", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
-            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임임.", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트임.", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
-            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임임.", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리함.", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
-            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임임.", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성함.", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
-            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임임.", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현함.", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
-            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱임.", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구임.", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
+            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹페이지", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성함.", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성함.", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
+            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조임.", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
+            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트임.", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
+            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리함.", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
+            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성함.", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
+            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현함.", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
+            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구임.", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
     );
 
     public static void main(String[] args) throws IOException {
@@ -62,11 +59,6 @@ public class Main {
 
         int port = server.getAddress().getPort();
         String url = "http://localhost:" + port + "/";
-        System.out.println("yampf926 포트폴리오 서버 실행됨.");
-        System.out.println(url);
-        for (String accessUrl : accessUrls(port)) {
-            System.out.println(accessUrl);
-        }
 
         boolean openBrowser = args.length == 0 || !"--no-browser".equals(args[0]);
         if (openBrowser && Desktop.isDesktopSupported()) {
@@ -927,15 +919,14 @@ public class Main {
                             overflow-wrap: break-word;
                         }
                         .music-panel {
-                            width: fit-content;
+                            width: min(250px, 100%%);
                             max-width: 100%%;
                             margin-top: 18px;
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 10px;
+                            display: grid;
+                            gap: 8px;
                             border: 1px solid rgba(255, 255, 255, 0.22);
-                            border-radius: 999px;
-                            padding: 7px 10px 7px 12px;
+                            border-radius: 8px;
+                            padding: 10px;
                             background: rgba(255, 255, 255, 0.10);
                             backdrop-filter: blur(12px);
                         }
@@ -945,29 +936,17 @@ public class Main {
                             line-height: 1.25;
                         }
                         .music-frame {
-                            position: absolute;
-                            width: 1px;
-                            height: 1px;
+                            width: 100%%;
+                            aspect-ratio: 16 / 9;
                             border: 0;
-                            opacity: 0;
-                            pointer-events: none;
+                            border-radius: 6px;
+                            background: rgba(255, 255, 255, 0.12);
                         }
                         .music-status {
                             min-height: 0;
                             color: rgba(255, 255, 255, 0.7);
                             font-size: 12px;
                             line-height: 1.25;
-                        }
-                        .music-status a {
-                            min-height: 28px;
-                            display: inline-flex;
-                            align-items: center;
-                            border-radius: 999px;
-                            padding: 5px 9px;
-                            color: rgba(255, 255, 255, 0.94);
-                            background: rgba(255, 255, 255, 0.12);
-                            text-decoration: none;
-                            font-weight: 900;
                         }
                         .note-actions {
                             display: flex;
@@ -1069,9 +1048,7 @@ public class Main {
                             .hero { padding: 58px 0 72px; }
                             h1 { font-size: 38px; }
                             .music-panel {
-                                align-items: flex-start;
-                                border-radius: 8px;
-                                flex-direction: column;
+                                width: min(280px, 100%%);
                             }
                             .toolbar,
                             .stats { grid-template-columns: 1fr; }
@@ -1102,7 +1079,7 @@ public class Main {
                             <div class="music-panel" aria-label="배경 음악 링크">
                                 <strong>BGM · I'll Always love you - 민기</strong>
                                 <iframe class="music-frame" src="https://www.youtube.com/embed/zD39SFYfKNE?rel=0" title="민기(MK) - I'll always love you" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                <div class="music-status"><a href="https://www.youtube.com/watch?v=zD39SFYfKNE" target="_blank" rel="noreferrer">듣기</a></div>
+                                <div class="music-status">페이지 안에서 재생 가능함.</div>
                             </div>
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
@@ -1157,7 +1134,7 @@ public class Main {
                                 </div>
                             </div>
                             <div class="grid">
-                                %s
+                                __PROJECT_CARDS__
                             </div>
                             <div class="no-results" id="noResults">조건에 맞는 프로젝트 없음.</div>
                         </section>
@@ -1301,27 +1278,7 @@ public class Main {
                     </script>
                 </body>
                 </html>
-                """.formatted(cards);
-    }
-
-    private static List<String> accessUrls(int port) {
-        List<String> urls = new ArrayList<>();
-        try {
-            for (NetworkInterface networkInterface : Collections.list(NetworkInterface.getNetworkInterfaces())) {
-                if (!networkInterface.isUp() || networkInterface.isLoopback() || networkInterface.isVirtual()) {
-                    continue;
-                }
-                for (InetAddress address : Collections.list(networkInterface.getInetAddresses())) {
-                    if (address.isLoopbackAddress() || address.isLinkLocalAddress() || address.getHostAddress().contains(":")) {
-                        continue;
-                    }
-                    urls.add("http://" + address.getHostAddress() + ":" + port + "/");
-                }
-            }
-        } catch (IOException ignored) {
-            return List.of();
-        }
-        return urls;
+                """.replace("%%", "%").replace("__PROJECT_CARDS__", cards.toString());
     }
 
     private static void send(HttpExchange exchange, int status, String body, String contentType) throws IOException {
