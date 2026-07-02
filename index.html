@@ -516,7 +516,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: 0;
+            border: 1px solid var(--line);
             border-radius: 8px;
             padding: 10px 12px;
             background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%, var(--pink));
@@ -535,14 +535,11 @@
             opacity: 0.58;
             cursor: wait;
         }
-        body.public-site .local-run {
-            display: none;
-        }
         body.public-site .card-actions {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
         .card a {
-            border: 1px solid color-mix(in srgb, var(--project-color) 26%, var(--line));
+            border: 1px solid var(--line);
             background: linear-gradient(135deg, #ffffff, #f5f1ff);
             color: var(--lavender-ink);
         }
@@ -710,7 +707,7 @@
         <div class="wrap hero">
             <div class="eyebrow">Published Portfolio</div>
             <h1>박서영의 작업 공간</h1>
-            <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리함.</p>
+            <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 정리한 웹페이지</p>
             <div class="music-panel" aria-label="배경 음악">
                 <iframe class="music-frame" src="https://www.youtube.com/embed/zD39SFYfKNE?rel=0" title="민기(MK) - I'll always love you" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
@@ -779,7 +776,7 @@
             <p>프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성함.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="dohwa">로컬 실행</button>
+            <button class="local-run" type="button" data-run="dohwa">바로 실행</button>
             <a class="download" href="launchers/dohwa.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -796,7 +793,7 @@
             <p>회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성함.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="game">로컬 실행</button>
+            <button class="local-run" type="button" data-run="game">바로 실행</button>
             <a class="download" href="launchers/game.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -813,7 +810,7 @@
             <p>장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조임.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="choice">로컬 실행</button>
+            <button class="local-run" type="button" data-run="choice">바로 실행</button>
             <a class="download" href="launchers/choice.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -830,7 +827,7 @@
             <p>방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트임.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="escape">로컬 실행</button>
+            <button class="local-run" type="button" data-run="escape">바로 실행</button>
             <a class="download" href="launchers/escape.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -847,7 +844,7 @@
             <p>플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리함.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="shooting">로컬 실행</button>
+            <button class="local-run" type="button" data-run="shooting">바로 실행</button>
             <a class="download" href="launchers/shooting.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -864,7 +861,7 @@
             <p>퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성함.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="sudoku">로컬 실행</button>
+            <button class="local-run" type="button" data-run="sudoku">바로 실행</button>
             <a class="download" href="launchers/sudoku.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -881,7 +878,7 @@
             <p>말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현함.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="yutnori">로컬 실행</button>
+            <button class="local-run" type="button" data-run="yutnori">바로 실행</button>
             <a class="download" href="launchers/yutnori.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -898,7 +895,7 @@
             <p>달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구임.</p>
         </details>
         <div class="card-actions">
-            <button class="local-run" type="button" data-run="calendar">로컬 실행</button>
+            <button class="local-run" type="button" data-run="calendar">바로 실행</button>
             <a class="download" href="launchers/calendar.bat">배치파일 다운로드</a>
         </div>
     </div>
@@ -1004,12 +1001,12 @@
         const canRunLocalProjects = isLocalAccess();
         document.body.classList.toggle("public-site", !canRunLocalProjects);
         document.querySelectorAll("[data-run]").forEach((button) => {
-            if (!canRunLocalProjects) {
-                button.hidden = true;
-                return;
-            }
-
             button.addEventListener("click", async () => {
+                if (!canRunLocalProjects) {
+                    toggleRunGuide(true);
+                    return;
+                }
+
                 const id = button.dataset.run;
                 button.disabled = true;
 

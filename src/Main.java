@@ -324,7 +324,7 @@ public class Main {
                                 <p>%s</p>
                             </details>
                             <div class="card-actions">
-                                <button class="local-run" type="button" data-run="%s">로컬 실행</button>
+                                <button class="local-run" type="button" data-run="%s">바로 실행</button>
                                 <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
                             </div>
                         </div>
@@ -864,7 +864,7 @@ public class Main {
                             display: inline-flex;
                             align-items: center;
                             justify-content: center;
-                            border: 0;
+                            border: 1px solid var(--line);
                             border-radius: 8px;
                             padding: 10px 12px;
                             background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
@@ -883,14 +883,11 @@ public class Main {
                             opacity: 0.58;
                             cursor: wait;
                         }
-                        body.public-site .local-run {
-                            display: none;
-                        }
                         body.public-site .card-actions {
-                            grid-template-columns: 1fr;
+                            grid-template-columns: repeat(2, minmax(0, 1fr));
                         }
                         .card a {
-                            border: 1px solid color-mix(in srgb, var(--project-color) 26%%, var(--line));
+                            border: 1px solid var(--line);
                             background: linear-gradient(135deg, #ffffff, #f5f1ff);
                             color: var(--lavender-ink);
                         }
@@ -1058,7 +1055,7 @@ public class Main {
                         <div class="wrap hero">
                             <div class="eyebrow">Published Portfolio</div>
                             <h1>박서영의 작업 공간</h1>
-                            <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리함.</p>
+                            <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 정리한 웹페이지</p>
                             <div class="music-panel" aria-label="배경 음악">
                                 <iframe class="music-frame" src="https://www.youtube.com/embed/zD39SFYfKNE?rel=0" title="민기(MK) - I'll always love you" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                             </div>
@@ -1216,12 +1213,12 @@ public class Main {
                         const canRunLocalProjects = isLocalAccess();
                         document.body.classList.toggle("public-site", !canRunLocalProjects);
                         document.querySelectorAll("[data-run]").forEach((button) => {
-                            if (!canRunLocalProjects) {
-                                button.hidden = true;
-                                return;
-                            }
-
                             button.addEventListener("click", async () => {
+                                if (!canRunLocalProjects) {
+                                    toggleRunGuide(true);
+                                    return;
+                                }
+
                                 const id = button.dataset.run;
                                 button.disabled = true;
 
