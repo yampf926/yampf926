@@ -32,8 +32,8 @@ public class Main {
     }
 
     private static final List<Project> PROJECTS = List.of(
-            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹페이지", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true, "dohwa/"),
-            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "브라우저에서 바로 실행되는 보드게임 컬렉션", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성", "HTML · CSS · JavaScript", "src\\Game", "#73d7ff", true, "boardgame/"),
+            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹페이지", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true, "https://yampf926.github.io/yampf926/dohwa/"),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "브라우저에서 바로 실행되는 보드게임 컬렉션", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성", "HTML · CSS · JavaScript", "src\\Game", "#73d7ff", true, "https://yampf926.github.io/yampf926/boardgame/"),
             new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false, ""),
             new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false, ""),
             new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false, ""),
@@ -542,6 +542,14 @@ public class Main {
                         main {
                             padding: 48px 0 76px;
                         }
+                        .content-section {
+                            margin-bottom: 28px;
+                            border: 1px solid rgba(223, 229, 236, 0.96);
+                            border-radius: 8px;
+                            padding: 22px;
+                            background: rgba(255, 255, 255, 0.9);
+                            box-shadow: 0 18px 48px rgba(117, 96, 181, 0.12);
+                        }
                         .section-title {
                             display: flex;
                             align-items: flex-end;
@@ -571,8 +579,8 @@ public class Main {
                             padding: 14px;
                             border: 1px solid var(--line);
                             border-radius: 8px;
-                            background: rgba(255, 255, 255, 0.82);
-                            box-shadow: 0 16px 44px rgba(117, 96, 181, 0.13);
+                            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.86));
+                            box-shadow: 0 12px 28px rgba(117, 96, 181, 0.08);
                         }
                         .search {
                             width: 100%%;
@@ -657,9 +665,8 @@ public class Main {
                             border: 1px solid var(--line);
                             border-radius: 8px;
                             padding: 16px;
-                            background:
-                                linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(245, 241, 255, 0.86));
-                            box-shadow: 0 14px 34px rgba(117, 96, 181, 0.09);
+                            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.86));
+                            box-shadow: 0 12px 28px rgba(117, 96, 181, 0.08);
                         }
                         .stat strong {
                             display: block;
@@ -678,7 +685,6 @@ public class Main {
                             display: grid;
                             grid-template-columns: 1.15fr 0.85fr;
                             gap: 20px;
-                            margin-bottom: 34px;
                             align-items: stretch;
                         }
                         .feature,
@@ -686,8 +692,8 @@ public class Main {
                             border: 1px solid var(--line);
                             border-radius: 8px;
                             overflow: hidden;
-                            background: rgba(255, 255, 255, 0.88);
-                            box-shadow: 0 18px 48px rgba(117, 96, 181, 0.14);
+                            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.86));
+                            box-shadow: 0 12px 28px rgba(117, 96, 181, 0.08);
                         }
                         .feature {
                             min-height: 300px;
@@ -744,7 +750,7 @@ public class Main {
                             padding: 12px;
                             border: 1px solid var(--line);
                             border-radius: 8px;
-                            background: linear-gradient(135deg, #ffffff, #f8f2ff);
+                            background: rgba(255, 255, 255, 0.88);
                         }
                         .summary-item span {
                             width: 38px;
@@ -781,9 +787,8 @@ public class Main {
                             flex-direction: column;
                             border: 1px solid rgba(223, 229, 236, 0.96);
                             border-radius: 8px;
-                            background:
-                                linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(252, 249, 255, 0.94));
-                            box-shadow: 0 16px 42px rgba(117, 96, 181, 0.13);
+                            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.86));
+                            box-shadow: 0 12px 28px rgba(117, 96, 181, 0.08);
                             transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
                         }
                         .card:hover {
@@ -940,9 +945,9 @@ public class Main {
                             margin-bottom: 22px;
                             padding: 18px 20px;
                             border: 1px solid rgba(223, 229, 236, 0.96);
-                            border-left: 4px solid var(--lavender);
                             border-radius: 8px;
-                            background: rgba(255, 255, 255, 0.92);
+                            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.86));
+                            box-shadow: 0 12px 28px rgba(117, 96, 181, 0.08);
                             color: var(--muted);
                             line-height: 1.72;
                             word-break: keep-all;
@@ -1103,7 +1108,7 @@ public class Main {
                     </header>
 
                     <main class="wrap">
-                        <section class="showcase" aria-label="대표 작업">
+                        <section class="showcase content-section" aria-label="대표 작업">
                             <div class="feature">
                                 <div class="feature-copy">
                                     <small>Featured</small>
@@ -1122,7 +1127,7 @@ public class Main {
                             </div>
                         </section>
 
-                        <section id="projects">
+                        <section class="content-section" id="projects">
                             <div class="section-title">
                                 <h2>프로젝트 모음</h2>
                             </div>
