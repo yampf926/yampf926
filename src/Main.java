@@ -35,14 +35,14 @@ public class Main {
     }
 
     private static final List<Project> PROJECTS = List.of(
-            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹 포트폴리오입니다.", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성했습니다.", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
-            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션입니다.", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성했습니다.", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
-            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임입니다.", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조입니다.", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
-            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임입니다.", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트입니다.", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
-            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임입니다.", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리했습니다.", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
-            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임입니다.", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성했습니다.", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
-            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임입니다.", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현했습니다.", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
-            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱입니다.", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구입니다.", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
+            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹 포트폴리오임.", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성함.", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션임.", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성함.", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
+            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임임.", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조임.", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
+            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임임.", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트임.", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
+            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임임.", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리함.", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
+            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임임.", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성함.", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
+            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임임.", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현함.", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
+            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱임.", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구임.", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
     );
 
     public static void main(String[] args) throws IOException {
@@ -62,7 +62,7 @@ public class Main {
 
         int port = server.getAddress().getPort();
         String url = "http://localhost:" + port + "/";
-        System.out.println("yampf926 포트폴리오 서버가 실행되었습니다.");
+        System.out.println("yampf926 포트폴리오 서버 실행됨.");
         System.out.println(url);
         for (String accessUrl : accessUrls(port)) {
             System.out.println(accessUrl);
@@ -123,30 +123,30 @@ public class Main {
                 title yampf926 - %s
                 echo.
                 echo [%s]
-                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 합니다.
+                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 함.
                 echo.
                 if not exist "%s" (
-                    echo 프로젝트 폴더를 찾지 못했습니다.
+                    echo 프로젝트 폴더를 찾지 못함.
                     echo %s
                     echo.
-                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없습니다.
+                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없음.
                     pause
                     exit /b 1
                 )
                 if not exist "%s" (
-                    echo Dohwa 실행 스크립트를 찾지 못했습니다.
+                    echo Dohwa 실행 스크립트를 찾지 못함.
                     echo %s
                     pause
                     exit /b 1
                 )
-                echo %s 백엔드와 프론트엔드를 함께 실행합니다.
-                echo 이미 8080 또는 412 포트에 이전 Dohwa 서버가 있으면 정리한 뒤 다시 시작합니다.
-                echo 브라우저가 자동으로 열리지 않으면 http://localhost:412 으로 접속하세요.
+                echo %s 백엔드와 프론트엔드를 함께 실행함.
+                echo 이미 8080 또는 412 포트에 이전 Dohwa 서버가 있으면 정리한 뒤 다시 시작함.
+                echo 브라우저가 자동으로 열리지 않으면 http://localhost:412 으로 접속하면 됨.
                 powershell -NoProfile -ExecutionPolicy Bypass -File "%s"
                 start "" "http://localhost:412"
                 if errorlevel 1 (
                     echo.
-                    echo 실행에 실패했습니다. 위 오류 내용을 확인하세요.
+                    echo 실행 실패함. 위 오류 내용 확인 필요.
                 )
                 pause
                 """.formatted(project.title(), project.title(), dohwaRoot, dohwaRoot, startScript, startScript, project.title(), startScript);
@@ -155,7 +155,7 @@ public class Main {
     private static String javaLauncher(Project project) {
         Path directory = ROOT.resolve(project.folder()).normalize();
         String compileCommand = """
-                powershell -NoProfile -ExecutionPolicy Bypass -Command "$files = @(Get-ChildItem -Recurse -Path 'src' -Filter '*.java' | ForEach-Object { $_.FullName }); if ($files.Count -eq 0) { Write-Host 'Java 파일을 찾지 못했습니다.'; exit 2 }; & javac -encoding UTF-8 -d out $files"
+                powershell -NoProfile -ExecutionPolicy Bypass -Command "$files = @(Get-ChildItem -Recurse -Path 'src' -Filter '*.java' | ForEach-Object { $_.FullName }); if ($files.Count -eq 0) { Write-Host 'Java 파일을 찾지 못함.'; exit 2 }; & javac -encoding UTF-8 -d out $files"
                 """.strip();
         String classPath = "out;src;assets;images;data";
 
@@ -170,25 +170,25 @@ public class Main {
                 title yampf926 - %s
                 echo.
                 echo [%s]
-                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 합니다.
+                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 함.
                 echo.
                 if not exist "%s" (
-                    echo 프로젝트 폴더를 찾지 못했습니다.
+                    echo 프로젝트 폴더를 찾지 못함.
                     echo %s
                     echo.
-                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없습니다.
+                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없음.
                     pause
                     exit /b 1
                 )
                 where java > nul 2> nul
                 if errorlevel 1 (
-                    echo java를 찾지 못했습니다. JDK를 설치한 뒤 다시 실행하세요.
+                    echo java를 찾지 못함. JDK 설치 후 다시 실행하면 됨.
                     pause
                     exit /b 1
                 )
                 where javac > nul 2> nul
                 if errorlevel 1 (
-                    echo javac를 찾지 못했습니다. JRE가 아니라 JDK가 필요합니다.
+                    echo javac를 찾지 못함. JRE가 아니라 JDK가 필요함.
                     pause
                     exit /b 1
                 )
@@ -198,7 +198,7 @@ public class Main {
                 %s
                 if errorlevel 1 (
                     echo.
-                    echo 컴파일에 실패했습니다.
+                    echo 컴파일 실패함.
                     pause
                     exit /b 1
                 )
@@ -206,7 +206,7 @@ public class Main {
                 java -cp "%s" Main
                 if errorlevel 1 (
                     echo.
-                    echo 실행에 실패했습니다. 위 오류 내용을 확인하세요.
+                    echo 실행 실패함. 위 오류 내용 확인 필요.
                 )
                 pause
                 """.formatted(project.title(), project.title(), directory, directory, directory, project.title(), compileCommand, project.title(), classPath);
@@ -238,7 +238,7 @@ public class Main {
                 .orElse(null);
 
         if (project == null) {
-            send(exchange, 404, "프로젝트를 찾지 못했습니다.", "text/plain; charset=UTF-8");
+            send(exchange, 404, "프로젝트를 찾지 못함.", "text/plain; charset=UTF-8");
             return;
         }
 
@@ -251,7 +251,7 @@ public class Main {
                 .directory(ROOT.toFile())
                 .start();
 
-        send(exchange, 200, project.title() + " 실행 파일을 열었습니다.", "text/plain; charset=UTF-8");
+        send(exchange, 200, project.title() + " 실행 파일을 열었음.", "text/plain; charset=UTF-8");
     }
 
     private static void handleLauncher(HttpExchange exchange) throws IOException {
@@ -262,13 +262,13 @@ public class Main {
 
         String fileName = Path.of(exchange.getRequestURI().getPath()).getFileName().toString();
         if (!fileName.endsWith(".bat")) {
-            send(exchange, 404, "파일을 찾지 못했습니다.", "text/plain; charset=UTF-8");
+            send(exchange, 404, "파일을 찾지 못함.", "text/plain; charset=UTF-8");
             return;
         }
 
         Path launcher = LAUNCHER_DIR.resolve(fileName).normalize();
         if (!launcher.startsWith(LAUNCHER_DIR) || !Files.exists(launcher)) {
-            send(exchange, 404, "파일을 찾지 못했습니다.", "text/plain; charset=UTF-8");
+            send(exchange, 404, "파일을 찾지 못함.", "text/plain; charset=UTF-8");
             return;
         }
 
@@ -380,6 +380,9 @@ public class Main {
                                 var(--bg);
                             color: var(--ink);
                             font-family: Arial, "Noto Sans KR", sans-serif;
+                            word-break: keep-all;
+                            overflow-wrap: break-word;
+                            line-break: strict;
                         }
                         header {
                             position: relative;
@@ -455,7 +458,7 @@ public class Main {
                             font-size: clamp(40px, 6vw, 72px);
                             line-height: 1.08;
                             letter-spacing: 0;
-                            overflow-wrap: keep-all;
+                            overflow-wrap: normal;
                             word-break: keep-all;
                         }
                         .hero p {
@@ -798,7 +801,7 @@ public class Main {
                             font-size: 12px;
                             line-height: 1.25;
                             font-weight: 900;
-                            overflow-wrap: anywhere;
+                            overflow-wrap: break-word;
                         }
                         h3 {
                             margin: 0 0 10px;
@@ -806,7 +809,7 @@ public class Main {
                             line-height: 1.32;
                             letter-spacing: 0;
                             word-break: keep-all;
-                            overflow-wrap: anywhere;
+                            overflow-wrap: break-word;
                         }
                         .card p {
                             margin: 0;
@@ -815,7 +818,7 @@ public class Main {
                             line-height: 1.68;
                             font-size: 14px;
                             word-break: keep-all;
-                            overflow-wrap: anywhere;
+                            overflow-wrap: break-word;
                         }
                         .tech {
                             margin-top: 14px;
@@ -825,7 +828,7 @@ public class Main {
                             font-size: 12px;
                             line-height: 1.45;
                             font-weight: 900;
-                            overflow-wrap: anywhere;
+                            overflow-wrap: break-word;
                         }
                         .project-detail {
                             margin-top: 12px;
@@ -869,7 +872,7 @@ public class Main {
                             font-weight: 900;
                             cursor: pointer;
                             white-space: normal;
-                            overflow-wrap: anywhere;
+                            overflow-wrap: break-word;
                         }
                         button:disabled {
                             opacity: 0.58;
@@ -903,7 +906,7 @@ public class Main {
                             color: var(--muted);
                             line-height: 1.72;
                             word-break: keep-all;
-                            overflow-wrap: anywhere;
+                            overflow-wrap: break-word;
                         }
                         footer {
                             margin-top: 48px;
@@ -929,7 +932,7 @@ public class Main {
                             color: rgba(255, 255, 255, 0.78);
                             line-height: 1.65;
                             text-decoration: none;
-                            overflow-wrap: anywhere;
+                            overflow-wrap: break-word;
                         }
                         .footer-box {
                             border-left: 1px solid rgba(255, 255, 255, 0.18);
@@ -982,7 +985,7 @@ public class Main {
                         <div class="wrap hero">
                             <div class="eyebrow">Published Portfolio</div>
                             <h1>박서영의 작업 공간</h1>
-                            <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리했습니다.</p>
+                            <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리함.</p>
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
                             </div>
@@ -995,7 +998,7 @@ public class Main {
                                 <div class="feature-copy">
                                     <small>Featured</small>
                                     <h2>웹과 Java 프로젝트 허브</h2>
-                                    <p>공개 페이지에서는 프로젝트 소개와 실행 파일 다운로드를 제공하고, 로컬 환경에서는 Java 작업을 바로 실행할 수 있습니다.</p>
+                                    <p>공개 페이지에서는 프로젝트 소개와 실행 파일 다운로드를 제공하고, 로컬 환경에서는 Java 작업을 바로 실행할 수 있음.</p>
                                 </div>
                                 <div class="feature-art" aria-hidden="true"></div>
                             </div>
@@ -1028,12 +1031,12 @@ public class Main {
                                 </div>
                                 <button class="reset-filter" id="resetFilter" type="button">초기화</button>
                             </div>
-                            <div class="result-meta" id="resultMeta">전체 프로젝트 8개를 표시 중입니다.</div>
-                            <div class="note">공개 웹사이트에서는 보안상 방문자 PC에서 Java 프로그램을 직접 실행할 수 없습니다. 소스는 GitHub에서 확인하고, 실행 스크립트는 프로젝트 폴더가 있는 로컬 PC에서 사용하세요.</div>
+                            <div class="result-meta" id="resultMeta">전체 프로젝트 8개 표시 중.</div>
+                            <div class="note">공개 웹사이트에서는 보안상 방문자 PC에서 Java 프로그램을 직접 실행할 수 없음. 소스는 GitHub에서 확인하고, 실행 스크립트는 프로젝트 폴더가 있는 로컬 PC에서 사용하면 됨.</div>
                             <div class="grid">
                                 %s
                             </div>
-                            <div class="no-results" id="noResults">조건에 맞는 프로젝트가 없습니다.</div>
+                            <div class="no-results" id="noResults">조건에 맞는 프로젝트 없음.</div>
                         </section>
                     </main>
 
@@ -1082,7 +1085,7 @@ public class Main {
                                     visibleCount++;
                                 }
                             });
-                            resultMeta.textContent = `총 ${cards.length}개 중 ${visibleCount}개 프로젝트를 표시 중입니다.`;
+                            resultMeta.textContent = `총 ${cards.length}개 중 ${visibleCount}개 프로젝트 표시 중.`;
                             noResults.classList.toggle("show", visibleCount === 0);
                         }
 
@@ -1137,7 +1140,7 @@ public class Main {
                         if (!canRunLocalProjects) {
                             document.querySelectorAll(".download").forEach((link) => {
                                 link.textContent = "실행 스크립트";
-                                link.title = "배치파일은 프로젝트 폴더가 있는 로컬 PC에서 실행할 수 있습니다.";
+                                link.title = "배치파일은 프로젝트 폴더가 있는 로컬 PC에서 실행 가능함.";
                             });
                         }
                     </script>
