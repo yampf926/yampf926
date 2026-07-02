@@ -1143,7 +1143,7 @@ public class Main {
                             </div>
                             <div class="result-meta" id="resultMeta">전체 프로젝트 8개 표시 중.</div>
                             <div class="note">
-                                Dohwa와 보드게임 컬렉션은 GitHub Pages 공개 주소로 바로 열림. Java 게임과 앱의 바로 실행은 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤 사용할 수 있음.
+                                Dohwa와 보드게임 컬렉션은 GitHub Pages 공개 주소로 바로 열림. Java 게임과 앱의 바로 실행은 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤 사용할 수 있음. 로컬 실행용 .bat은 브라우저에서 바로 실행되지 않고 다운로드만 됨.
                                 <div class="note-actions">
                                     <button class="guide-button" id="openRunGuide" type="button">로컬 실행 방법</button>
                                 </div>
@@ -1163,6 +1163,7 @@ public class Main {
                                 <li>Java 게임과 앱은 IntelliJ에서 yampf926 프로젝트를 연 뒤 src/Main.java를 실행함.</li>
                                 <li>로컬 실행 서버는 http://localhost:9260 에서만 열림.</li>
                                 <li>Java 카드의 바로 실행 버튼을 누르면 이 서버가 launchers 폴더의 실행 파일을 실행함.</li>
+                                <li>로컬 실행용 .bat은 다운로드 파일이라서 직접 실행해야 하며, 이 PC의 프로젝트 경로와 JDK가 맞아야 동작함.</li>
                                 <li>서버가 꺼져 있으면 Java 카드에서 localhost 연결 실패가 표시됨.</li>
                             </ol>
                             <button id="closeRunGuide" type="button">닫기</button>
@@ -1270,8 +1271,8 @@ public class Main {
                         });
                         if (!canRunLocalProjects) {
                             document.querySelectorAll(".download").forEach((link) => {
-                                link.textContent = "실행 스크립트";
-                                link.title = "배치파일은 프로젝트 폴더가 있는 로컬 PC에서 실행 가능함.";
+                                link.textContent = "로컬 실행용 .bat";
+                                link.title = "다운로드되는 Windows 배치파일임. 프로젝트 폴더와 JDK가 있는 로컬 PC에서만 실행 가능함.";
                             });
                         }
 
@@ -1301,7 +1302,7 @@ public class Main {
             return """
                     <div class="card-actions">
                         <a class="local-run" href="%s" target="_blank" rel="noopener">바로 실행</a>
-                        <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
+                        <a class="download" href="launchers/%s.bat">로컬 실행용 .bat</a>
                     </div>
                     """.formatted(project.liveUrl(), project.id());
         }
@@ -1309,7 +1310,7 @@ public class Main {
         return """
                 <div class="card-actions">
                     <button class="local-run" type="button" data-run="%s">바로 실행</button>
-                    <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
+                    <a class="download" href="launchers/%s.bat">로컬 실행용 .bat</a>
                 </div>
                 """.formatted(project.id(), project.id());
     }
