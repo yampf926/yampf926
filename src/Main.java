@@ -415,7 +415,7 @@ public class Main {
                             width: 34px;
                             height: 34px;
                             flex: 0 0 auto;
-                            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iOCIgeTE9IjgiIHgyPSI1NiIgeTI9IjU2IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzgwNjRkOSIvPjxzdG9wIG9mZnNldD0iLjU2IiBzdG9wLWNvbG9yPSIjYzliOGZmIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZmY4ZmNiIi8+PC9saW5lYXJHcmFkaWVudD48ZmlsdGVyIGlkPSJzIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIj48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iNSIgc3RkRGV2aWF0aW9uPSI0IiBmbG9vZC1jb2xvcj0iIzgwNjRkOSIgZmxvb2Qtb3BhY2l0eT0iLjI4Ii8+PC9maWx0ZXI+PC9kZWZzPjxyZWN0IHg9IjYiIHk9IjYiIHdpZHRoPSI1MiIgaGVpZ2h0PSI1MiIgcng9IjEyIiBmaWxsPSJ1cmwoI2cpIiBmaWx0ZXI9InVybCgjcykiLz48cGF0aCBkPSJNMjAgMTNoMTN2OGE1IDUgMCAxIDAgMTAgMHYtOGg4djE0aC04YTUgNSAwIDEgMCAwIDEwaDh2MTRIMzd2LThhNSA1IDAgMSAwLTEwIDB2OEgxM1YzN2g4YTUgNSAwIDEgMCAwLTEwaC04VjEzaDd6IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iLjk0Ii8+PC9zdmc+") center/contain no-repeat;
+                            background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA3MiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMTAiIHkxPSI4IiB4Mj0iNjIiIHkyPSI2NCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIHN0b3AtY29sb3I9IiM4MDY0ZDkiLz48c3RvcCBvZmZzZXQ9Ii41OCIgc3RvcC1jb2xvcj0iI2M5YjhmZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmOGZjYiIvPjwvbGluZWFyR3JhZGllbnQ+PGZpbHRlciBpZD0icyIgeD0iLTIwJSIgeT0iLTIwJSIgd2lkdGg9IjE0MCUiIGhlaWdodD0iMTQwJSI+PGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjUiIHN0ZERldmlhdGlvbj0iNCIgZmxvb2QtY29sb3I9IiM4MDY0ZDkiIGZsb29kLW9wYWNpdHk9Ii4yOCIvPjwvZmlsdGVyPjwvZGVmcz48cGF0aCBmaWx0ZXI9InVybCgjcykiIGZpbGw9InVybCgjZykiIGQ9Ik0xOCAxNEgyOEMyOCA3IDQwIDcgNDAgMTRINTRDNTcuMyAxNCA2MCAxNi43IDYwIDIwVjMwQzY3IDMwIDY3IDQyIDYwIDQyVjU0QzYwIDU3LjMgNTcuMyA2MCA1NCA2MEg0MEM0MCA1MyAyOCA1MyAyOCA2MEgxOEMxNC43IDYwIDEyIDU3LjMgMTIgNTRWNDJDMjAgNDIgMjAgMzAgMTIgMzBWMjBDMTIgMTYuNyAxNC43IDE0IDE4IDE0WiIvPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIuNTYiIGQ9Ik0xOCAxNEgyOEMyOCA3IDQwIDcgNDAgMTRINTRDNTcuMyAxNCA2MCAxNi43IDYwIDIwVjMwQzY3IDMwIDY3IDQyIDYwIDQyVjU0QzYwIDU3LjMgNTcuMyA2MCA1NCA2MEg0MEM0MCA1MyAyOCA1MyAyOCA2MEgxOEMxNC43IDYwIDEyIDU3LjMgMTIgNTRWNDJDMjAgNDIgMjAgMzAgMTIgMzBWMjBDMTIgMTYuNyAxNC43IDE0IDE4IDE0WiIvPjwvc3ZnPg==") center/contain no-repeat;
                         }
                         .hero {
                             max-width: 780px;
@@ -920,8 +920,8 @@ public class Main {
 
                     <header>
                         <div class="wrap hero">
-                            <div class="eyebrow">Local Project Launcher</div>
-                            <h1>yampf926 Portfolio</h1>
+                            <div class="eyebrow">Published Project Portfolio</div>
+                            <h1>박서영의 작업 공간</h1>
                             <p>웹사이트와 Java 프로젝트를 모아 정리한 개인 작업 공간입니다.</p>
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
@@ -993,7 +993,7 @@ public class Main {
                                 <p><a href="https://github.com/yampf926?tab=repositories" target="_blank" rel="noreferrer">GitHub</a></p>
                             </div>
                         </div>
-                        <div class="wrap footer-bottom">© 2026 yampf926 Portfolio. All rights reserved.</div>
+                        <div class="wrap footer-bottom">© 2026 박서영의 작업 공간. All rights reserved.</div>
                     </footer>
 
                     <script>
