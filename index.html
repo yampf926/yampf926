@@ -998,18 +998,18 @@
         const canRunLocalProjects = isLocalAccess();
         document.querySelectorAll("[data-run]").forEach((button) => {
             button.addEventListener("click", async () => {
-                if (!canRunLocalProjects) {
-                    window.location.href = `http://localhost:9260/run/${button.dataset.run}`;
-                    return;
-                }
-
                 const id = button.dataset.run;
+                const runUrl = canRunLocalProjects ? `/run/${id}` : `http://localhost:9260/run/${id}`;
                 button.disabled = true;
 
                 try {
-                    await fetch(`/run/${id}`, { method: "POST" });
+                    const response = await fetch(runUrl, { method: "POST" });
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
                 } catch (error) {
                     console.error(error);
+                    alert("로컬 실행 서버에 연결하지 못했음. IntelliJ에서 src/Main.java를 먼저 실행한 뒤 다시 눌러야 함.");
                 } finally {
                     button.disabled = false;
                 }

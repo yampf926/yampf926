@@ -220,6 +220,13 @@ public class Main {
     }
 
     private static void handleRun(HttpExchange exchange) throws IOException {
+        applyCors(exchange);
+
+        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+            exchange.sendResponseHeaders(204, -1);
+            return;
+        }
+
         if (!"POST".equalsIgnoreCase(exchange.getRequestMethod()) && !"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
             send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
             return;
@@ -252,11 +259,10 @@ public class Main {
                     <head>
                         <meta charset="UTF-8">
                         <title>프로젝트 실행</title>
-                        <meta http-equiv="refresh" content="1; url=/">
                     </head>
                     <body>
                         <p>%s 실행 요청을 보냈음.</p>
-                        <p>잠시 뒤 포트폴리오로 돌아감.</p>
+                        <p>이 창은 닫아도 됨.</p>
                     </body>
                     </html>
                     """.formatted(project.title()), "text/html; charset=UTF-8");
@@ -1214,18 +1220,18 @@ public class Main {
                         const canRunLocalProjects = isLocalAccess();
                         document.querySelectorAll("[data-run]").forEach((button) => {
                             button.addEventListener("click", async () => {
-                                if (!canRunLocalProjects) {
-                                    window.location.href = `http://localhost:9260/run/${button.dataset.run}`;
-                                    return;
-                                }
-
                                 const id = button.dataset.run;
+                                const runUrl = canRunLocalProjects ? `/run/${id}` : `http://localhost:9260/run/${id}`;
                                 button.disabled = true;
 
                                 try {
-                                    await fetch(`/run/${id}`, { method: "POST" });
+                                    const response = await fetch(runUrl, { method: "POST" });
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP ${response.status}`);
+                                    }
                                 } catch (error) {
                                     console.error(error);
+                                    alert("로컬 실행 서버에 연결하지 못했음. IntelliJ에서 src/Main.java를 먼저 실행한 뒤 다시 눌러야 함.");
                                 } finally {
                                     button.disabled = false;
                                 }
@@ -1267,6 +1273,14 @@ public class Main {
         try (OutputStream output = exchange.getResponseBody()) {
             output.write(bytes);
         }
+    }
+
+    private static void applyCors(HttpExchange exchange) {
+        Headers headers = exchange.getResponseHeaders();
+        headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+        headers.set("Access-Control-Allow-Headers", "Content-Type");
+        headers.set("Access-Control-Allow-Private-Network", "true");
     }
 
     private static void sendFile(HttpExchange exchange, Path file, String contentType) throws IOException {
