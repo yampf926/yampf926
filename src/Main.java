@@ -936,17 +936,23 @@ public class Main {
                             color: white;
                             font-size: 14px;
                         }
-                        .music-panel audio {
+                        .music-frame {
                             width: 100%%;
                             max-width: 460px;
-                            min-height: 42px;
+                            aspect-ratio: 16 / 9;
+                            border: 0;
                             border-radius: 8px;
+                            background: rgba(255, 255, 255, 0.12);
                         }
                         .music-status {
                             min-height: 18px;
                             color: rgba(255, 255, 255, 0.76);
                             font-size: 12px;
                             line-height: 1.45;
+                        }
+                        .music-status a {
+                            color: rgba(255, 255, 255, 0.92);
+                            font-weight: 900;
                         }
                         .note-actions {
                             display: flex;
@@ -1075,10 +1081,8 @@ public class Main {
                             <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리함.</p>
                             <div class="music-panel" aria-label="배경 음악">
                                 <strong>I'll Always love you - 민기</strong>
-                                <audio id="bgm" controls autoplay loop preload="metadata">
-                                    <source src="assets/ill-always-love-you-mingi.mp3" type="audio/mpeg">
-                                </audio>
-                                <div class="music-status" id="musicStatus">브라우저 정책에 따라 자동 재생이 막히면 재생 버튼을 누르면 됨.</div>
+                                <iframe class="music-frame" src="https://www.youtube.com/embed/zD39SFYfKNE?rel=0" title="민기(MK) - I'll always love you" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                <div class="music-status">공식 YouTube 플레이어로 재생함. <a href="https://www.youtube.com/watch?v=zD39SFYfKNE" target="_blank" rel="noreferrer">YouTube에서 열기</a></div>
                             </div>
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
@@ -1179,8 +1183,6 @@ public class Main {
                         const resetFilter = document.querySelector("#resetFilter");
                         const resultMeta = document.querySelector("#resultMeta");
                         const noResults = document.querySelector("#noResults");
-                        const bgm = document.querySelector("#bgm");
-                        const musicStatus = document.querySelector("#musicStatus");
                         const runGuide = document.querySelector("#runGuide");
                         const openRunGuide = document.querySelector("#openRunGuide");
                         const closeRunGuide = document.querySelector("#closeRunGuide");
@@ -1258,17 +1260,6 @@ public class Main {
                             document.querySelectorAll(".download").forEach((link) => {
                                 link.textContent = "실행 스크립트";
                                 link.title = "배치파일은 프로젝트 폴더가 있는 로컬 PC에서 실행 가능함.";
-                            });
-                        }
-
-                        if (bgm) {
-                            bgm.addEventListener("error", () => {
-                                musicStatus.textContent = "음원 파일이 아직 연결되지 않음. assets/ill-always-love-you-mingi.mp3 파일을 추가하면 재생 가능함.";
-                            });
-                            bgm.play().then(() => {
-                                musicStatus.textContent = "재생 중.";
-                            }).catch(() => {
-                                musicStatus.textContent = "자동 재생이 막히면 재생 버튼을 누르면 됨.";
                             });
                         }
 
