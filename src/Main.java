@@ -864,9 +864,6 @@ public class Main {
                             gap: 10px;
                             margin-top: 20px;
                         }
-                        .card-actions.single-action {
-                            grid-template-columns: 1fr;
-                        }
                         button,
                         .card a {
                             min-width: 0;
@@ -1268,10 +1265,11 @@ public class Main {
     private static String actionHtml(Project project) {
         if (!project.liveUrl().isBlank()) {
             return """
-                    <div class="card-actions single-action">
+                    <div class="card-actions">
                         <a class="local-run" href="%s" target="_blank" rel="noopener">바로 실행</a>
+                        <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
                     </div>
-                    """.formatted(project.liveUrl());
+                    """.formatted(project.liveUrl(), project.id());
         }
 
         return """
