@@ -565,31 +565,46 @@
             overflow-wrap: break-word;
         }
         .music-panel {
-            margin-top: 22px;
-            display: grid;
-            gap: 8px;
-            max-width: 520px;
+            width: fit-content;
+            max-width: 100%;
+            margin-top: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            padding: 7px 10px 7px 12px;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(12px);
         }
         .music-panel strong {
-            color: white;
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
+            line-height: 1.25;
         }
         .music-frame {
-            width: 100%;
-            max-width: 460px;
-            aspect-ratio: 16 / 9;
+            position: absolute;
+            width: 1px;
+            height: 1px;
             border: 0;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.12);
+            opacity: 0;
+            pointer-events: none;
         }
         .music-status {
-            min-height: 18px;
-            color: rgba(255, 255, 255, 0.76);
+            min-height: 0;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 12px;
-            line-height: 1.45;
+            line-height: 1.25;
         }
         .music-status a {
-            color: rgba(255, 255, 255, 0.92);
+            min-height: 28px;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 5px 9px;
+            color: rgba(255, 255, 255, 0.94);
+            background: rgba(255, 255, 255, 0.12);
+            text-decoration: none;
             font-weight: 900;
         }
         .note-actions {
@@ -691,6 +706,11 @@
             header { min-height: 340px; }
             .hero { padding: 58px 0 72px; }
             h1 { font-size: 38px; }
+            .music-panel {
+                align-items: flex-start;
+                border-radius: 8px;
+                flex-direction: column;
+            }
             .toolbar,
             .stats { grid-template-columns: 1fr; }
             .filters { justify-content: flex-start; }
@@ -717,10 +737,10 @@
             <div class="eyebrow">Published Portfolio</div>
             <h1>박서영의 작업 공간</h1>
             <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리함.</p>
-            <div class="music-panel" aria-label="배경 음악">
-                <strong>I'll Always love you - 민기</strong>
+            <div class="music-panel" aria-label="배경 음악 링크">
+                <strong>BGM · I'll Always love you - 민기</strong>
                 <iframe class="music-frame" src="https://www.youtube.com/embed/zD39SFYfKNE?rel=0" title="민기(MK) - I'll always love you" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                <div class="music-status">공식 YouTube 플레이어로 재생함. <a href="https://www.youtube.com/watch?v=zD39SFYfKNE" target="_blank" rel="noreferrer">YouTube에서 열기</a></div>
+                <div class="music-status"><a href="https://www.youtube.com/watch?v=zD39SFYfKNE" target="_blank" rel="noreferrer">듣기</a></div>
             </div>
             <div class="hero-actions">
                 <a href="#projects">프로젝트 보기</a>
