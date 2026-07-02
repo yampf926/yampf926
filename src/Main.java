@@ -14,7 +14,6 @@ import java.util.List;
 
 public class Main {
     private static final int PORT = 9260;
-    private static final int MAX_PORT = 9270;
     private static final Path ROOT = Path.of("").toAbsolutePath();
     private static final Path LAUNCHER_DIR = ROOT.resolve("launchers");
 
@@ -50,15 +49,14 @@ public class Main {
             return;
         }
 
-        HttpServer server = createServer();
+        HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", PORT), 0);
         server.createContext("/", Main::handleHome);
         server.createContext("/run", Main::handleRun);
         server.createContext("/launchers", Main::handleLauncher);
         server.setExecutor(null);
         server.start();
 
-        int port = server.getAddress().getPort();
-        String url = "http://localhost:" + port + "/";
+        String url = "http://localhost:" + PORT + "/";
 
         boolean openBrowser = args.length == 0 || !"--no-browser".equals(args[0]);
         if (openBrowser && Desktop.isDesktopSupported()) {
@@ -80,18 +78,6 @@ public class Main {
         Files.writeString(index, buildHtml(), StandardCharsets.UTF_8);
         System.out.println("Static website exported: " + index);
         System.out.println("Deploy index.html with the launchers folder to a static web host.");
-    }
-
-    private static HttpServer createServer() throws IOException {
-        IOException lastError = null;
-        for (int port = PORT; port <= MAX_PORT; port++) {
-            try {
-                return HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
-            } catch (IOException error) {
-                lastError = error;
-            }
-        }
-        throw lastError == null ? new IOException("No available port") : lastError;
     }
 
     private static void createLaunchers() throws IOException {
@@ -1120,7 +1106,7 @@ public class Main {
                             </div>
                             <div class="result-meta" id="resultMeta">전체 프로젝트 8개 표시 중.</div>
                             <div class="note">
-                                공개 웹사이트에서는 보안상 방문자 PC에서 Java 프로그램을 직접 실행할 수 없음. 소스는 GitHub에서 확인하고, 실행 스크립트는 프로젝트 폴더가 있는 로컬 PC에서 사용하면 됨.
+                                바로 실행은 yampf926 폴더에 파일이 있는 것만으로 동작하지 않음. 먼저 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤, 공개 페이지의 바로 실행 버튼을 누르면 됨.
                                 <div class="note-actions">
                                     <button class="guide-button" id="openRunGuide" type="button">로컬 실행 방법</button>
                                 </div>
@@ -1136,10 +1122,11 @@ public class Main {
                         <div class="modal-panel">
                             <h2 id="runGuideTitle">로컬 실행 방법</h2>
                             <ol>
-                                <li>GitHub에서 프로젝트를 내려받음.</li>
-                                <li>Java JDK가 설치된 PC에서 프로젝트 폴더를 엶.</li>
-                                <li>필요한 카드의 실행 스크립트를 내려받거나 `launchers` 폴더의 배치파일을 실행함.</li>
-                                <li>웹 프로젝트는 안내된 로컬 주소로 접속하면 됨.</li>
+                                <li>IntelliJ에서 yampf926 프로젝트를 엶.</li>
+                                <li>src/Main.java를 실행해 로컬 실행 서버를 켬.</li>
+                                <li>서버는 http://localhost:9260 에서만 열림.</li>
+                                <li>공개 페이지에서 바로 실행 버튼을 누르면 이 서버가 launchers 폴더의 실행 파일을 실행함.</li>
+                                <li>서버가 꺼져 있으면 localhost 연결 실패가 표시됨.</li>
                             </ol>
                             <button id="closeRunGuide" type="button">닫기</button>
                         </div>
