@@ -26,6 +26,8 @@ public class Main {
             String title,
             String type,
             String description,
+            String detail,
+            String tech,
             String folder,
             String accent,
             boolean webProject
@@ -33,14 +35,14 @@ public class Main {
     }
 
     private static final List<Project> PROJECTS = List.of(
-            new Project("dohwa", "Dohwa 웹사이트", "웹페이지", "React/Vite로 만든 웹 포트폴리오 프로젝트입니다.", "src\\Dohwa\\frontend", "#c9b8ff", true),
-            new Project("game", "보드게임 컬렉션", "웹페이지", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션입니다.", "src\\Game", "#c9b8ff", false),
-            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임입니다.", "src\\choice", "#c9b8ff", false),
-            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임입니다.", "src\\escape", "#c9b8ff", false),
-            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임입니다.", "src\\shootingGame", "#c9b8ff", false),
-            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임입니다.", "src\\sudoku", "#c9b8ff", false),
-            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임입니다.", "src\\yutnori", "#c9b8ff", false),
-            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱입니다.", "src\\Calendar", "#c9b8ff", false)
+            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹 포트폴리오입니다.", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성했습니다.", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션입니다.", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성했습니다.", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
+            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임입니다.", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조입니다.", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
+            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임입니다.", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트입니다.", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
+            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임입니다.", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리했습니다.", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
+            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임입니다.", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성했습니다.", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
+            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임입니다.", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현했습니다.", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
+            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱입니다.", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구입니다.", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
     );
 
     public static void main(String[] args) throws IOException {
@@ -298,19 +300,29 @@ public class Main {
         return String.join(" ", categories);
     }
 
+    private static String sourceUrl(Project project) {
+        return "https://github.com/yampf926/yampf926";
+    }
+
     private static String buildHtml() {
         StringBuilder cards = new StringBuilder();
         for (Project project : PROJECTS) {
             cards.append("""
                     <article class="card" style="--project-color:%s" data-title="%s" data-type="%s" data-categories="%s">
-                        <div class="thumb"></div>
+                        <div class="thumb"><span>%s</span></div>
                         <div class="card-body">
                             <span class="tag">%s</span>
                             <h3>%s</h3>
                             <p>%s</p>
+                            <div class="tech">%s</div>
+                            <details class="project-detail">
+                                <summary>상세 보기</summary>
+                                <p>%s</p>
+                            </details>
                             <div class="card-actions">
-                                <button type="button" data-run="%s">실행</button>
-                                <a href="launchers/%s.bat">배치파일</a>
+                                <button class="local-run" type="button" data-run="%s">로컬 실행</button>
+                                <a class="source" href="%s" target="_blank" rel="noreferrer">GitHub 보기</a>
+                                <a class="download" href="launchers/%s.bat">배치파일 다운로드</a>
                             </div>
                         </div>
                     </article>
@@ -319,10 +331,14 @@ public class Main {
                     project.title().toLowerCase(),
                     project.type().toLowerCase(),
                     filterCategories(project),
+                    project.id().toUpperCase(),
                     project.type(),
                     project.title(),
                     project.description(),
+                    project.tech(),
+                    project.detail(),
                     project.id(),
+                    sourceUrl(project),
                     project.id()
             ));
         }
@@ -754,6 +770,17 @@ public class Main {
                             box-shadow: -28px -18px 0 rgba(255, 255, 255, 0.16), -54px 8px 0 rgba(255, 213, 106, 0.22);
                             transition: transform 180ms ease;
                         }
+                        .thumb span {
+                            position: absolute;
+                            left: 18px;
+                            bottom: 16px;
+                            z-index: 1;
+                            color: white;
+                            font-size: 22px;
+                            line-height: 1;
+                            font-weight: 900;
+                            text-shadow: 0 8px 22px rgba(45, 30, 76, 0.34);
+                        }
                         .card-body {
                             padding: 20px;
                             display: flex;
@@ -790,9 +817,35 @@ public class Main {
                             word-break: keep-all;
                             overflow-wrap: anywhere;
                         }
+                        .tech {
+                            margin-top: 14px;
+                            border-top: 1px solid var(--line);
+                            padding-top: 12px;
+                            color: var(--lavender-ink);
+                            font-size: 12px;
+                            line-height: 1.45;
+                            font-weight: 900;
+                            overflow-wrap: anywhere;
+                        }
+                        .project-detail {
+                            margin-top: 12px;
+                            color: var(--muted);
+                            font-size: 13px;
+                            line-height: 1.62;
+                        }
+                        .project-detail summary {
+                            width: fit-content;
+                            cursor: pointer;
+                            color: var(--lavender-deep);
+                            font-weight: 900;
+                        }
+                        .project-detail p {
+                            margin-top: 8px;
+                            flex: 0;
+                        }
                         .card-actions {
                             display: grid;
-                            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                            grid-template-columns: repeat(3, minmax(0, 1fr));
                             gap: 10px;
                             margin-top: 20px;
                         }
@@ -822,6 +875,12 @@ public class Main {
                             opacity: 0.58;
                             cursor: wait;
                         }
+                        body.public-site .local-run {
+                            display: none;
+                        }
+                        body.public-site .card-actions {
+                            grid-template-columns: repeat(2, minmax(0, 1fr));
+                        }
                         .card a {
                             border: 1px solid color-mix(in srgb, var(--project-color) 26%%, var(--line));
                             background: linear-gradient(135deg, #ffffff, #f5f1ff);
@@ -835,6 +894,7 @@ public class Main {
                         }
                         .note {
                             margin-top: 24px;
+                            margin-bottom: 22px;
                             padding: 18px 20px;
                             border: 1px solid rgba(223, 229, 236, 0.96);
                             border-left: 4px solid var(--lavender);
@@ -920,9 +980,9 @@ public class Main {
 
                     <header>
                         <div class="wrap hero">
-                            <div class="eyebrow">Published Project Portfolio</div>
+                            <div class="eyebrow">Published Portfolio</div>
                             <h1>박서영의 작업 공간</h1>
-                            <p>웹사이트와 Java 프로젝트를 모아 정리한 개인 작업 공간입니다.</p>
+                            <p>웹으로 확인할 수 있는 작업과 Java로 직접 실행해볼 수 있는 프로젝트를 한 곳에 정리했습니다.</p>
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
                             </div>
@@ -935,31 +995,31 @@ public class Main {
                                 <div class="feature-copy">
                                     <small>Featured</small>
                                     <h2>웹과 Java 프로젝트 허브</h2>
-                                    <p>작업한 여러 프로젝트를 한 화면에서 탐색하고 실행할 수 있도록 정리했습니다.</p>
+                                    <p>공개 페이지에서는 프로젝트 소개와 실행 파일 다운로드를 제공하고, 로컬 환경에서는 Java 작업을 바로 실행할 수 있습니다.</p>
                                 </div>
                                 <div class="feature-art" aria-hidden="true"></div>
                             </div>
                             <div class="summary">
-                                <h2>작업 구성</h2>
+                                <h2>구성 요약</h2>
                                 <div class="summary-list">
                                     <div class="summary-item"><span>01</span><div><strong>웹 프로젝트</strong><em>Dohwa와 브라우저 기반 보드게임 컬렉션</em></div></div>
-                                    <div class="summary-item"><span>02</span><div><strong>게임</strong><em>스토리, 탈출, 슈팅, 스도쿠, 윷놀이 등 직접 실행하는 Java 게임</em></div></div>
-                                    <div class="summary-item"><span>03</span><div><strong>앱</strong><em>일정과 예산을 관리하는 데스크톱 도구</em></div></div>
+                                    <div class="summary-item"><span>02</span><div><strong>Java 게임</strong><em>스토리, 탈출, 슈팅, 스도쿠, 윷놀이처럼 직접 실행하는 게임</em></div></div>
+                                    <div class="summary-item"><span>03</span><div><strong>데스크톱 앱</strong><em>일정과 예산을 관리하는 캘린더/가계부 도구</em></div></div>
                                 </div>
                             </div>
                         </section>
 
                         <section id="projects">
                             <div class="section-title">
-                                <h2>프로젝트 실행</h2>
+                                <h2>프로젝트 모음</h2>
                             </div>
                             <div class="stats">
                                 <div class="stat"><strong>8</strong><span>등록된 프로젝트</span></div>
-                                <div class="stat"><strong>2</strong><span>웹사이트</span></div>
-                                <div class="stat"><strong>6</strong><span>게임·앱 프로젝트</span></div>
+                                <div class="stat"><strong>2</strong><span>웹 기반 작업</span></div>
+                                <div class="stat"><strong>6</strong><span>Java 게임·앱</span></div>
                             </div>
                             <div class="toolbar">
-                                <input class="search" id="search" type="search" placeholder="프로젝트 검색">
+                                <input class="search" id="search" type="search" placeholder="프로젝트 이름이나 기술 검색">
                                 <div class="filters" aria-label="프로젝트 필터">
                                     <button class="filter active" type="button" data-filter="all">전체</button>
                                     <button class="filter" type="button" data-filter="web">웹</button>
@@ -969,6 +1029,7 @@ public class Main {
                                 <button class="reset-filter" id="resetFilter" type="button">초기화</button>
                             </div>
                             <div class="result-meta" id="resultMeta">전체 프로젝트 8개를 표시 중입니다.</div>
+                            <div class="note">공개 웹사이트에서는 보안상 방문자 PC에서 Java 프로그램을 직접 실행할 수 없습니다. 소스는 GitHub에서 확인하고, 실행 스크립트는 프로젝트 폴더가 있는 로컬 PC에서 사용하세요.</div>
                             <div class="grid">
                                 %s
                             </div>
@@ -1011,8 +1072,9 @@ public class Main {
                             cards.forEach((card) => {
                                 const title = card.dataset.title || "";
                                 const type = card.dataset.type || "";
+                                const text = card.textContent.toLowerCase();
                                 const categories = (card.dataset.categories || "").split(" ");
-                                const matchesSearch = !query || title.includes(query) || type.includes(query);
+                                const matchesSearch = !query || title.includes(query) || type.includes(query) || text.includes(query);
                                 const matchesFilter = activeFilter === "all" || categories.includes(activeFilter);
                                 const visible = matchesSearch && matchesFilter;
                                 card.hidden = !visible;
@@ -1052,11 +1114,10 @@ public class Main {
                         }
 
                         const canRunLocalProjects = isLocalAccess();
+                        document.body.classList.toggle("public-site", !canRunLocalProjects);
                         document.querySelectorAll("[data-run]").forEach((button) => {
                             if (!canRunLocalProjects) {
-                                button.textContent = "로컬 실행 전용";
-                                button.title = "공개 웹사이트에서는 방문자 PC의 Java 프로젝트를 직접 실행하지 않습니다.";
-                                button.disabled = true;
+                                button.hidden = true;
                                 return;
                             }
 
@@ -1073,6 +1134,12 @@ public class Main {
                                 }
                             });
                         });
+                        if (!canRunLocalProjects) {
+                            document.querySelectorAll(".download").forEach((link) => {
+                                link.textContent = "실행 스크립트";
+                                link.title = "배치파일은 프로젝트 폴더가 있는 로컬 PC에서 실행할 수 있습니다.";
+                            });
+                        }
                     </script>
                 </body>
                 </html>

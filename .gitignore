@@ -1,8 +1,26 @@
 ### IntelliJ IDEA ###
+.idea/
+*.iml
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
+
+### Java ###
+*.class
+target/
+build/
+dist/
+
+### Logs and local runtime data ###
+*.log
+*.db
+*.trace.db
+*.lock.db
+
+### JavaScript dependencies and bundled tools ###
+node_modules/
+tools/
 
 ### Eclipse ###
 .apt_generated
