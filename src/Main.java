@@ -234,7 +234,7 @@ public class Main {
     }
 
     private static void handleRun(HttpExchange exchange) throws IOException {
-        if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
+        if (!"POST".equalsIgnoreCase(exchange.getRequestMethod()) && !"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
             send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
             return;
         }
@@ -258,6 +258,24 @@ public class Main {
         new ProcessBuilder("cmd", "/c", "start", "", launcher.toString())
                 .directory(ROOT.toFile())
                 .start();
+
+        if ("GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            send(exchange, 200, """
+                    <!DOCTYPE html>
+                    <html lang="ko">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>프로젝트 실행</title>
+                        <meta http-equiv="refresh" content="1; url=/">
+                    </head>
+                    <body>
+                        <p>%s 실행 요청을 보냈음.</p>
+                        <p>잠시 뒤 포트폴리오로 돌아감.</p>
+                    </body>
+                    </html>
+                    """.formatted(project.title()), "text/html; charset=UTF-8");
+            return;
+        }
 
         send(exchange, 200, project.title() + " 실행 파일을 열었음.", "text/plain; charset=UTF-8");
     }
@@ -1210,7 +1228,7 @@ public class Main {
                         document.querySelectorAll("[data-run]").forEach((button) => {
                             button.addEventListener("click", async () => {
                                 if (!canRunLocalProjects) {
-                                    toggleRunGuide(true);
+                                    window.location.href = `http://localhost:9260/run/${button.dataset.run}`;
                                     return;
                                 }
 

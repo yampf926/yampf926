@@ -998,7 +998,7 @@
         document.querySelectorAll("[data-run]").forEach((button) => {
             button.addEventListener("click", async () => {
                 if (!canRunLocalProjects) {
-                    toggleRunGuide(true);
+                    window.location.href = `http://localhost:9260/run/${button.dataset.run}`;
                     return;
                 }
 
