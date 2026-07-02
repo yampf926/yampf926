@@ -147,12 +147,15 @@ function saveFavorites(){if(!user)return;localStorage.setItem(favKey,JSON.string
 async function api(path,data,method="POST"){
   const usersKey="boardgameStaticUsers";
   const currentKey="boardgameStaticCurrentUser";
-  const readUsers=()=>JSON.parse(localStorage.getItem(usersKey)||"{}");
+  const readUsers=()=>{
+    try{return JSON.parse(localStorage.getItem(usersKey)||"{}")}
+    catch(e){localStorage.removeItem(usersKey);return {}}
+  };
   const writeUsers=(users)=>localStorage.setItem(usersKey,JSON.stringify(users));
   const publicUser=(item)=>item?{username:item.username,displayName:item.displayName,image:item.image||"",wins:item.wins||0,losses:item.losses||0}:null;
   const users=readUsers();
   const current=localStorage.getItem(currentKey)||"";
-  if(path==="/api/me") return publicUser(users[current]);
+  if(path==="/api/me") return users[current]?publicUser(users[current]):{ok:true,user:null};
   if(path==="/api/signup"){
     const username=(data?.username||"").trim();
     const password=data?.password||"";
