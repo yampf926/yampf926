@@ -535,9 +535,6 @@
             opacity: 0.58;
             cursor: wait;
         }
-        body.public-site .card-actions {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
         .card a {
             border: 1px solid var(--line);
             background: linear-gradient(135deg, #ffffff, #f5f1ff);
@@ -687,7 +684,6 @@
             .filters { justify-content: flex-start; }
             .grid { grid-template-columns: 1fr; }
             .card-actions { grid-template-columns: 1fr; }
-            body.public-site .card-actions { grid-template-columns: 1fr; }
             .footer-inner { grid-template-columns: 1fr; }
             .footer-box {
                 border-left: 0;
@@ -773,7 +769,7 @@
         <div class="tech">React · Vite · Spring Boot</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성함.</p>
+            <p>프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="dohwa">바로 실행</button>
@@ -790,7 +786,7 @@
         <div class="tech">Java HttpServer · HTML · JavaScript</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성함.</p>
+            <p>회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="game">바로 실행</button>
@@ -807,7 +803,7 @@
         <div class="tech">Java Swing · JSON 데이터</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조임.</p>
+            <p>장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="choice">바로 실행</button>
@@ -824,7 +820,7 @@
         <div class="tech">Java Swing · 이미지 리소스</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트임.</p>
+            <p>방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="escape">바로 실행</button>
@@ -841,7 +837,7 @@
         <div class="tech">Java · 키보드 이벤트</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리함.</p>
+            <p>플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="shooting">바로 실행</button>
@@ -858,7 +854,7 @@
         <div class="tech">Java Swing · 퍼즐 로직</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성함.</p>
+            <p>퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="sudoku">바로 실행</button>
@@ -875,7 +871,7 @@
         <div class="tech">Java · AI 이동 로직</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현함.</p>
+            <p>말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="yutnori">바로 실행</button>
@@ -892,7 +888,7 @@
         <div class="tech">Java Swing · JSON 저장</div>
         <details class="project-detail">
             <summary>상세 보기</summary>
-            <p>달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구임.</p>
+            <p>달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구</p>
         </details>
         <div class="card-actions">
             <button class="local-run" type="button" data-run="calendar">바로 실행</button>
@@ -999,7 +995,6 @@
         }
 
         const canRunLocalProjects = isLocalAccess();
-        document.body.classList.toggle("public-site", !canRunLocalProjects);
         document.querySelectorAll("[data-run]").forEach((button) => {
             button.addEventListener("click", async () => {
                 if (!canRunLocalProjects) {

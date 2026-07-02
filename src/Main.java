@@ -32,14 +32,14 @@ public class Main {
     }
 
     private static final List<Project> PROJECTS = List.of(
-            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹페이지", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성함.", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
-            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성함.", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
-            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조임.", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
-            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트임.", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
-            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리함.", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
-            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성함.", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
-            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현함.", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
-            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구임.", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
+            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite로 만든 팬 커뮤니티형 웹페이지", "프론트엔드 화면, 백엔드 API, 예약/게시글/알림 같은 서비스 흐름을 함께 구성", "React · Vite · Spring Boot", "src\\Dohwa\\frontend", "#c9b8ff", true),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java 로컬 서버로 실행되고 브라우저에서 열리는 보드게임 컬렉션", "회원 정보, 게임 선택, 활동 기록처럼 브라우저 안에서 확인하는 보드게임 허브 형태로 구성", "Java HttpServer · HTML · JavaScript", "src\\Game", "#73d7ff", false),
+            new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "장면 데이터, 선택지, 분기 흐름을 이용해 사용자가 이야기의 진행 방향을 고르는 구조", "Java Swing · JSON 데이터", "src\\choice", "#ff8fcb", false),
+            new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false),
+            new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리", "Java · 키보드 이벤트", "src\\shootingGame", "#a56dff", false),
+            new Project("sudoku", "스도쿠", "Java 게임", "숫자 퍼즐을 풀 수 있는 스도쿠 게임", "퍼즐 입력과 검증 흐름을 중심으로 숫자 배치 규칙을 연습할 수 있게 구성", "Java Swing · 퍼즐 로직", "src\\sudoku", "#8bdc9b", false),
+            new Project("yutnori", "윷놀이", "Java 게임", "이미지 리소스와 AI 이동 로직이 포함된 윷놀이 게임", "말 이동, 턴 진행, 간단한 AI 판단을 포함해 전통 보드게임 흐름을 구현", "Java · AI 이동 로직", "src\\yutnori", "#ffb86b", false),
+            new Project("calendar", "캘린더/가계부", "Java 앱", "일정과 예산을 관리하는 데스크톱 앱", "달력, 일정, 예산 입력을 한 화면에서 관리하는 개인 생산성 도구", "Java Swing · JSON 저장", "src\\Calendar", "#7dd3fc", false)
     );
 
     public static void main(String[] args) throws IOException {
@@ -883,9 +883,6 @@ public class Main {
                             opacity: 0.58;
                             cursor: wait;
                         }
-                        body.public-site .card-actions {
-                            grid-template-columns: repeat(2, minmax(0, 1fr));
-                        }
                         .card a {
                             border: 1px solid var(--line);
                             background: linear-gradient(135deg, #ffffff, #f5f1ff);
@@ -1035,7 +1032,6 @@ public class Main {
                             .filters { justify-content: flex-start; }
                             .grid { grid-template-columns: 1fr; }
                             .card-actions { grid-template-columns: 1fr; }
-                            body.public-site .card-actions { grid-template-columns: 1fr; }
                             .footer-inner { grid-template-columns: 1fr; }
                             .footer-box {
                                 border-left: 0;
@@ -1211,7 +1207,6 @@ public class Main {
                         }
 
                         const canRunLocalProjects = isLocalAccess();
-                        document.body.classList.toggle("public-site", !canRunLocalProjects);
                         document.querySelectorAll("[data-run]").forEach((button) => {
                             button.addEventListener("click", async () => {
                                 if (!canRunLocalProjects) {
