@@ -940,7 +940,8 @@ public class Main {
                         .local-run,
                         .card a.local-run {
                             width: 100%%;
-                            border-color: transparent;
+                            border: 0;
+                            outline: 0;
                             background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
                             color: white;
                             box-shadow: 0 10px 22px rgba(117, 96, 181, 0.14);
@@ -956,7 +957,8 @@ public class Main {
                         }
                         .local-run:hover,
                         .card a.local-run:hover {
-                            border-color: transparent;
+                            border: 0;
+                            outline: 0;
                             background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
                             color: white;
                             box-shadow: 0 12px 26px rgba(117, 96, 181, 0.24);
