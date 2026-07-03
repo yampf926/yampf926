@@ -942,8 +942,8 @@ public class Main {
                             width: 100%%;
                             border: 0 !important;
                             outline: 0 !important;
-                            background: var(--lavender-deep) !important;
-                            background-image: none !important;
+                            background: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
+                            background-image: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
                             color: white;
                             box-shadow: none !important;
                         }
@@ -960,8 +960,8 @@ public class Main {
                         .card a.local-run:hover {
                             border: 0 !important;
                             outline: 0 !important;
-                            background: var(--lavender-deep) !important;
-                            background-image: none !important;
+                            background: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
+                            background-image: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
                             color: white;
                             box-shadow: none !important;
                         }
