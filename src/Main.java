@@ -940,11 +940,12 @@ public class Main {
                         .local-run,
                         .card a.local-run {
                             width: 100%%;
-                            border: 0;
-                            outline: 0;
-                            background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
+                            border: 0 !important;
+                            outline: 0 !important;
+                            background: var(--lavender-deep) !important;
+                            background-image: none !important;
                             color: white;
-                            box-shadow: none;
+                            box-shadow: none !important;
                         }
                         button:hover,
                         .card a:hover,
@@ -957,11 +958,12 @@ public class Main {
                         }
                         .local-run:hover,
                         .card a.local-run:hover {
-                            border: 0;
-                            outline: 0;
-                            background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
+                            border: 0 !important;
+                            outline: 0 !important;
+                            background: var(--lavender-deep) !important;
+                            background-image: none !important;
                             color: white;
-                            box-shadow: none;
+                            box-shadow: none !important;
                         }
                         .note {
                             margin-top: 24px;
