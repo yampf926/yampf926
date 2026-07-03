@@ -411,6 +411,8 @@ public class Main {
                             --pink: #ff8fcb;
                             --aqua: #73d7ff;
                             --gold: #ffd56a;
+                            --hover-accent: #8064d9;
+                            --hover-accent-soft: #f5f1ff;
                             --shadow: 0 24px 70px rgba(117, 96, 181, 0.22);
                         }
                         body {
@@ -617,7 +619,8 @@ public class Main {
                         }
                         .filter:hover {
                             transform: translateY(-1px);
-                            border-color: var(--lavender-mid);
+                            border-color: var(--hover-accent);
+                            background: var(--hover-accent-soft);
                         }
                         .filter.active {
                             border-color: var(--lavender-mid);
@@ -793,7 +796,7 @@ public class Main {
                         }
                         .card:hover {
                             transform: translateY(-7px) scale(1.01);
-                            border-color: color-mix(in srgb, var(--project-color) 44%%, var(--line));
+                            border-color: var(--hover-accent);
                             box-shadow: var(--shadow);
                         }
                         .card:hover .thumb {
@@ -934,11 +937,29 @@ public class Main {
                             background: linear-gradient(135deg, #ffffff, #f5f1ff);
                             color: var(--lavender-ink);
                         }
+                        .local-run,
+                        .card a.local-run {
+                            width: 100%%;
+                            border-color: transparent;
+                            background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
+                            color: white;
+                            box-shadow: 0 10px 22px rgba(117, 96, 181, 0.14);
+                        }
                         button:hover,
                         .card a:hover,
                         .reset-filter:hover {
                             transform: translateY(-1px);
+                            border-color: var(--hover-accent);
+                            background: var(--hover-accent-soft);
+                            color: var(--lavender-deep);
                             box-shadow: 0 10px 22px rgba(117, 96, 181, 0.18);
+                        }
+                        .local-run:hover,
+                        .card a.local-run:hover {
+                            border-color: transparent;
+                            background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
+                            color: white;
+                            box-shadow: 0 12px 26px rgba(117, 96, 181, 0.24);
                         }
                         .note {
                             margin-top: 24px;
