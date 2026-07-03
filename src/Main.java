@@ -944,7 +944,7 @@ public class Main {
                             outline: 0;
                             background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
                             color: white;
-                            box-shadow: 0 10px 22px rgba(117, 96, 181, 0.14);
+                            box-shadow: none;
                         }
                         button:hover,
                         .card a:hover,
@@ -961,7 +961,7 @@ public class Main {
                             outline: 0;
                             background: linear-gradient(135deg, var(--lavender-deep), #a56dff 52%%, var(--pink));
                             color: white;
-                            box-shadow: 0 12px 26px rgba(117, 96, 181, 0.24);
+                            box-shadow: none;
                         }
                         .note {
                             margin-top: 24px;
