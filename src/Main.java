@@ -1,11 +1,4 @@
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpServer;
-
-import java.awt.Desktop;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,9 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    private static final int PORT = 9260;
     private static final Path ROOT = Path.of("").toAbsolutePath();
-    private static final Path LAUNCHER_DIR = ROOT.resolve("launchers");
 
     private record Project(
             String id,
@@ -33,7 +24,7 @@ public class Main {
 
     private static final List<Project> PROJECTS = List.of(
             new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite와 Spring Boot로 만든 팬 커뮤니티형 웹페이지", "공연 예매, 팬 게시판, 채팅, 알림 흐름을 구성하고 공개 페이지는 정적 데모 API로 실행", "React · Vite · Spring Boot · 정적 데모 API", "src\\Dohwa\\frontend", "#c9b8ff", true, "https://yampf926.github.io/yampf926/dohwa/"),
-            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java HttpServer에서 출발해 브라우저에서 실행되도록 정리한 보드게임 허브", "회원 정보, 게임 선택, 활동 기록을 localStorage로 보관하며 공개 페이지에서 바로 플레이 가능", "Java HttpServer · HTML · CSS · JavaScript", "src\\Game", "#73d7ff", true, "https://yampf926.github.io/yampf926/boardgame/"),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java HttpServer에서 출발해 브라우저에서 실행되도록 정리한 보드게임 허브", "회원 정보, 게임 선택, 활동 기록을 브라우저 저장소에 보관하며 공개 페이지에서 바로 플레이 가능", "Java HttpServer · HTML · CSS · JavaScript", "src\\Game", "#73d7ff", true, "https://yampf926.github.io/yampf926/boardgame/"),
             new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "scenes.json 장면 데이터와 선택지 분기 흐름을 이용해 사용자가 이야기의 방향을 고르는 구조", "Java Swing · JSON 장면 데이터", "src\\choice", "#ff8fcb", false, ""),
             new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false, ""),
             new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 발사, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리", "Java Swing · 키보드 이벤트 · Timer", "src\\shootingGame", "#a56dff", false, ""),
@@ -43,300 +34,14 @@ public class Main {
     );
 
     public static void main(String[] args) throws IOException {
-        createLaunchers();
-
-        if (hasArg(args, "--export-static")) {
-            exportStaticSite();
-            return;
-        }
-
-        HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", PORT), 0);
-        server.createContext("/", Main::handleHome);
-        server.createContext("/run", Main::handleRun);
-        server.createContext("/launchers", Main::handleLauncher);
-        server.setExecutor(null);
-        server.start();
-
-        String url = "http://localhost:" + PORT + "/";
-
-        boolean openBrowser = args.length == 0 || !"--no-browser".equals(args[0]);
-        if (openBrowser && Desktop.isDesktopSupported()) {
-            Desktop.getDesktop().browse(java.net.URI.create(url));
-        }
-    }
-
-    private static boolean hasArg(String[] args, String expected) {
-        for (String arg : args) {
-            if (expected.equals(arg)) {
-                return true;
-            }
-        }
-        return false;
+        exportStaticSite();
     }
 
     private static void exportStaticSite() throws IOException {
         Path index = ROOT.resolve("index.html");
         Files.writeString(index, buildHtml(), StandardCharsets.UTF_8);
         System.out.println("Static website exported: " + index);
-        System.out.println("Deploy index.html with the launchers folder to a static web host.");
-    }
-
-    private static void createLaunchers() throws IOException {
-        Files.createDirectories(LAUNCHER_DIR);
-
-        for (Project project : PROJECTS) {
-            Path launcher = launcherPath(project);
-            String script = "dohwa".equals(project.id())
-                    ? webLauncher(project)
-                    : javaLauncher(project);
-            Files.writeString(launcher, normalizeBatch(script), StandardCharsets.UTF_8);
-        }
-    }
-
-    private static String webLauncher(Project project) {
-        Path dohwaRoot = ROOT.resolve("src\\Dohwa").normalize();
-        Path startScript = dohwaRoot.resolve("scripts\\start-dev.ps1");
-        return """
-                @echo off
-                chcp 65001 > nul
-                title yampf926 - %s
-                echo.
-                echo [%s]
-                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 함.
-                echo.
-                if not exist "%s" (
-                    echo 프로젝트 폴더를 찾지 못함.
-                    echo %s
-                    echo.
-                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없음.
-                    pause
-                    exit /b 1
-                )
-                if not exist "%s" (
-                    echo Dohwa 실행 스크립트를 찾지 못함.
-                    echo %s
-                    pause
-                    exit /b 1
-                )
-                echo %s 백엔드와 프론트엔드를 함께 실행함.
-                echo 이미 8080 또는 412 포트에 이전 Dohwa 서버가 있으면 정리한 뒤 다시 시작함.
-                echo 브라우저가 자동으로 열리지 않으면 http://localhost:412 으로 접속하면 됨.
-                powershell -NoProfile -ExecutionPolicy Bypass -File "%s"
-                start "" "http://localhost:412"
-                if errorlevel 1 (
-                    echo.
-                    echo 실행 실패함. 위 오류 내용 확인 필요.
-                )
-                pause
-                """.formatted(project.title(), project.title(), dohwaRoot, dohwaRoot, startScript, startScript, project.title(), startScript);
-    }
-
-    private static String javaLauncher(Project project) {
-        Path directory = ROOT.resolve(project.folder()).normalize();
-        String compileCommand = """
-                powershell -NoProfile -ExecutionPolicy Bypass -Command "$files = @(Get-ChildItem -Recurse -Path 'src' -Filter '*.java' | ForEach-Object { $_.FullName }); if ($files.Count -eq 0) { Write-Host 'Java 파일을 찾지 못함.'; exit 2 }; & javac -encoding UTF-8 -d out $files"
-                """.strip();
-        String classPath = "out;src;assets;images;data";
-
-        if ("yutnori".equals(project.id())) {
-            return yutnoriLauncher(project, directory);
-        }
-
-        return """
-                @echo off
-                chcp 65001 > nul
-                title yampf926 - %s
-                echo.
-                echo [%s]
-                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 함.
-                echo.
-                if not exist "%s" (
-                    echo 프로젝트 폴더를 찾지 못함.
-                    echo %s
-                    echo.
-                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없음.
-                    pause
-                    exit /b 1
-                )
-                where java > nul 2> nul
-                if errorlevel 1 (
-                    echo java를 찾지 못함. JDK 설치 후 다시 실행하면 됨.
-                    pause
-                    exit /b 1
-                )
-                where javac > nul 2> nul
-                if errorlevel 1 (
-                    echo javac를 찾지 못함. JRE가 아니라 JDK가 필요함.
-                    pause
-                    exit /b 1
-                )
-                cd /d "%s"
-                echo %s 컴파일 중...
-                if not exist out mkdir out
-                %s
-                if errorlevel 1 (
-                    echo.
-                    echo 컴파일 실패함.
-                    pause
-                    exit /b 1
-                )
-                echo %s 실행 중...
-                java -cp "%s" Main
-                if errorlevel 1 (
-                    echo.
-                    echo 실행 실패함. 위 오류 내용 확인 필요.
-                )
-                pause
-                """.formatted(project.title(), project.title(), directory, directory, directory, project.title(), compileCommand, project.title(), classPath);
-    }
-
-    private static String yutnoriLauncher(Project project, Path directory) {
-        Path runScript = directory.resolve("run.bat");
-        return """
-                @echo off
-                chcp 65001 > nul
-                title yampf926 - %s
-                echo.
-                echo [%s]
-                echo 이 파일은 yampf926 프로젝트가 있는 PC에서 실행해야 함.
-                echo.
-                if not exist "%s" (
-                    echo 프로젝트 폴더를 찾지 못함.
-                    echo %s
-                    echo.
-                    echo 다른 기기에서 다운받은 배치파일은 실행할 수 없음.
-                    pause
-                    exit /b 1
-                )
-                if not exist "%s" (
-                    echo 윷놀이 실행 스크립트를 찾지 못함.
-                    echo %s
-                    pause
-                    exit /b 1
-                )
-                cd /d "%s"
-                echo 개별 실행과 같은 run.bat으로 윷놀이를 실행함.
-                call "%s"
-                if errorlevel 1 (
-                    echo.
-                    echo 실행 실패함. 위 오류 내용 확인 필요.
-                )
-                pause
-                """.formatted(project.title(), project.title(), directory, directory, runScript, runScript, directory, runScript);
-    }
-
-    private static String normalizeBatch(String script) {
-        return script.stripIndent().replace("\r\n", "\n").replace("\n", "\r\n");
-    }
-
-    private static void handleHome(HttpExchange exchange) throws IOException {
-        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
-            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
-            return;
-        }
-
-        String path = exchange.getRequestURI().getPath();
-        if ("/favicon.png".equals(path)) {
-            sendFile(exchange, ROOT.resolve("favicon.png"), "image/png");
-            return;
-        }
-        if (path.startsWith("/assets/")) {
-            Path asset = ROOT.resolve(path.substring(1)).normalize();
-            Path assetRoot = ROOT.resolve("assets").normalize();
-            if (!asset.startsWith(assetRoot)) {
-                exchange.sendResponseHeaders(404, -1);
-                return;
-            }
-            sendFile(exchange, asset, contentType(asset));
-            return;
-        }
-
-        send(exchange, 200, buildHtml(), "text/html; charset=UTF-8");
-    }
-
-    private static void handleRun(HttpExchange exchange) throws IOException {
-        applyCors(exchange);
-
-        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
-            exchange.sendResponseHeaders(204, -1);
-            return;
-        }
-
-        if (!"POST".equalsIgnoreCase(exchange.getRequestMethod()) && !"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
-            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
-            return;
-        }
-
-        String id = exchange.getRequestURI().getPath().replaceFirst("^/run/?", "");
-        Project project = PROJECTS.stream()
-                .filter(item -> item.id().equals(id))
-                .findFirst()
-                .orElse(null);
-
-        if (project == null) {
-            send(exchange, 404, "프로젝트를 찾지 못함.", "text/plain; charset=UTF-8");
-            return;
-        }
-
-        Path launcher = launcherPath(project);
-        if (!Files.exists(launcher)) {
-            createLaunchers();
-        }
-
-        new ProcessBuilder("cmd", "/c", "start", "", launcher.toString())
-                .directory(ROOT.toFile())
-                .start();
-
-        if ("GET".equalsIgnoreCase(exchange.getRequestMethod())) {
-            send(exchange, 200, """
-                    <!DOCTYPE html>
-                    <html lang="ko">
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>프로젝트 실행</title>
-                    </head>
-                    <body>
-                        <p>%s 실행 요청을 보냈음.</p>
-                        <p>이 창은 닫아도 됨.</p>
-                    </body>
-                    </html>
-                    """.formatted(project.title()), "text/html; charset=UTF-8");
-            return;
-        }
-
-        send(exchange, 200, project.title() + " 실행 파일을 열었음.", "text/plain; charset=UTF-8");
-    }
-
-    private static void handleLauncher(HttpExchange exchange) throws IOException {
-        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
-            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
-            return;
-        }
-
-        String fileName = Path.of(exchange.getRequestURI().getPath()).getFileName().toString();
-        if (!fileName.endsWith(".bat")) {
-            send(exchange, 404, "파일을 찾지 못함.", "text/plain; charset=UTF-8");
-            return;
-        }
-
-        Path launcher = LAUNCHER_DIR.resolve(fileName).normalize();
-        if (!launcher.startsWith(LAUNCHER_DIR) || !Files.exists(launcher)) {
-            send(exchange, 404, "파일을 찾지 못함.", "text/plain; charset=UTF-8");
-            return;
-        }
-
-        byte[] bytes = Files.readAllBytes(launcher);
-        Headers headers = exchange.getResponseHeaders();
-        headers.set("Content-Type", "application/x-bat; charset=UTF-8");
-        headers.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        exchange.sendResponseHeaders(200, bytes.length);
-        try (OutputStream output = exchange.getResponseBody()) {
-            output.write(bytes);
-        }
-    }
-
-    private static Path launcherPath(Project project) {
-        return LAUNCHER_DIR.resolve(project.id() + ".bat");
+        System.out.println("Deploy index.html to a static web host.");
     }
 
     private static String filterCategories(Project project) {
@@ -937,8 +642,8 @@ public class Main {
                             background: linear-gradient(135deg, #ffffff, #f5f1ff);
                             color: var(--lavender-ink);
                         }
-                        .local-run,
-                        .card a.local-run {
+                        .project-link,
+                        .card a.project-link {
                             width: 100%%;
                             border: 0 !important;
                             outline: 0 !important;
@@ -956,8 +661,8 @@ public class Main {
                             color: var(--lavender-deep);
                             box-shadow: 0 10px 22px rgba(117, 96, 181, 0.18);
                         }
-                        .local-run:hover,
-                        .card a.local-run:hover {
+                        .project-link:hover,
+                        .card a.project-link:hover {
                             border: 0 !important;
                             outline: 0 !important;
                             background: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
@@ -978,6 +683,18 @@ public class Main {
                             word-break: keep-all;
                             overflow-wrap: break-word;
                         }
+                        .project-status {
+                            width: 100%%;
+                            min-height: 42px;
+                            display: grid;
+                            place-items: center;
+                            border: 1px solid var(--line);
+                            border-radius: 8px;
+                            background: #f8f6fc;
+                            color: var(--muted);
+                            font-weight: 900;
+                            font-size: 13px;
+                        }
                         .music-panel {
                             width: min(220px, 100%%);
                             max-width: 100%%;
@@ -995,52 +712,6 @@ public class Main {
                             border: 0;
                             border-radius: 6px;
                             background: rgba(255, 255, 255, 0.12);
-                        }
-                        .note-actions {
-                            display: flex;
-                            flex-wrap: wrap;
-                            gap: 10px;
-                            margin-top: 14px;
-                        }
-                        .guide-button {
-                            width: fit-content;
-                            min-height: 38px;
-                            border-radius: 8px;
-                            padding: 8px 12px;
-                            font-size: 13px;
-                        }
-                        .modal {
-                            position: fixed;
-                            inset: 0;
-                            z-index: 30;
-                            display: none;
-                            align-items: center;
-                            justify-content: center;
-                            padding: 24px;
-                            background: rgba(23, 32, 42, 0.48);
-                        }
-                        .modal.show {
-                            display: flex;
-                        }
-                        .modal-panel {
-                            width: min(520px, 100%%);
-                            border-radius: 8px;
-                            border: 1px solid var(--line);
-                            background: white;
-                            box-shadow: var(--shadow);
-                            padding: 22px;
-                        }
-                        .modal-panel h2 {
-                            margin-bottom: 12px;
-                        }
-                        .modal-panel ol {
-                            margin: 0;
-                            padding-left: 22px;
-                            color: var(--muted);
-                            line-height: 1.75;
-                        }
-                        .modal-panel button {
-                            margin-top: 18px;
                         }
                         footer {
                             margin-top: 48px;
@@ -1138,7 +809,7 @@ public class Main {
                                 <div class="feature-copy">
                                     <small>Featured</small>
                                     <h2>웹과 Java 프로젝트 허브</h2>
-                                    <p>웹 프로젝트는 공개 페이지에서 바로 열고, Java 작업은 로컬 환경에서 실행할 수 있음.</p>
+                                    <p>웹 프로젝트는 공개 페이지에서 바로 열고, Java 작업은 구현 내용과 기술 구성을 확인할 수 있음.</p>
                                 </div>
                                 <div class="feature-art" aria-hidden="true"></div>
                             </div>
@@ -1173,10 +844,7 @@ public class Main {
                             </div>
                             <div class="result-meta" id="resultMeta">전체 프로젝트 8개 표시 중.</div>
                             <div class="note">
-                                Dohwa와 보드게임 컬렉션은 GitHub Pages 공개 주소로 바로 열림. Java 게임과 앱의 바로 실행은 이 PC에서 Main.java를 실행해 9260 포트의 로컬 실행 서버를 켠 뒤 사용할 수 있음.
-                                <div class="note-actions">
-                                    <button class="guide-button" id="openRunGuide" type="button">로컬 실행 방법</button>
-                                </div>
+                                공개 실행은 브라우저 기반 웹 프로젝트에만 제공됨. Java 게임과 앱은 프로젝트 카드에서 구현 내용과 사용 기술을 확인할 수 있음.
                             </div>
                             <div class="grid">
                                 __PROJECT_CARDS__
@@ -1184,20 +852,6 @@ public class Main {
                             <div class="no-results" id="noResults">조건에 맞는 프로젝트 없음.</div>
                         </section>
                     </main>
-
-                    <div class="modal" id="runGuide" role="dialog" aria-modal="true" aria-labelledby="runGuideTitle">
-                        <div class="modal-panel">
-                            <h2 id="runGuideTitle">로컬 실행 방법</h2>
-                            <ol>
-                                <li>Dohwa와 보드게임 컬렉션은 공개 페이지에서 바로 열림.</li>
-                                <li>Java 게임과 앱은 IntelliJ에서 yampf926 프로젝트를 연 뒤 src/Main.java를 실행함.</li>
-                                <li>로컬 실행 서버는 http://localhost:9260 에서만 열림.</li>
-                                <li>Java 카드의 바로 실행 버튼을 누르면 이 서버가 내부 실행 파일을 실행함.</li>
-                                <li>서버가 꺼져 있으면 Java 카드에서 localhost 연결 실패가 표시됨.</li>
-                            </ol>
-                            <button id="closeRunGuide" type="button">닫기</button>
-                        </div>
-                    </div>
 
                     <footer>
                         <div class="footer-inner">
@@ -1226,9 +880,6 @@ public class Main {
                         const resetFilter = document.querySelector("#resetFilter");
                         const resultMeta = document.querySelector("#resultMeta");
                         const noResults = document.querySelector("#noResults");
-                        const runGuide = document.querySelector("#runGuide");
-                        const openRunGuide = document.querySelector("#openRunGuide");
-                        const closeRunGuide = document.querySelector("#closeRunGuide");
                         let activeFilter = "all";
 
                         function applyFilters() {
@@ -1266,53 +917,6 @@ public class Main {
                             filters.forEach((item) => item.classList.toggle("active", item.dataset.filter === "all"));
                             applyFilters();
                         });
-
-                        function isLocalAccess() {
-                            const host = location.hostname;
-                            return location.protocol === "file:"
-                                || host === "localhost"
-                                || host === "127.0.0.1"
-                                || host === "::1"
-                                || /^10\\./.test(host)
-                                || /^192\\.168\\./.test(host)
-                                || /^172\\.(1[6-9]|2\\d|3[0-1])\\./.test(host);
-                        }
-
-                        const canRunLocalProjects = isLocalAccess();
-                        document.querySelectorAll("[data-run]").forEach((button) => {
-                            button.addEventListener("click", async () => {
-                                const id = button.dataset.run;
-                                const runUrl = canRunLocalProjects ? `/run/${id}` : `http://localhost:9260/run/${id}`;
-                                button.disabled = true;
-
-                                try {
-                                    const response = await fetch(runUrl, { method: "POST" });
-                                    if (!response.ok) {
-                                        throw new Error(`HTTP ${response.status}`);
-                                    }
-                                } catch (error) {
-                                    console.error(error);
-                                    alert("로컬 실행 서버에 연결하지 못했음. IntelliJ에서 src/Main.java를 먼저 실행한 뒤 다시 눌러야 함.");
-                                } finally {
-                                    button.disabled = false;
-                                }
-                            });
-                        });
-                        function toggleRunGuide(show) {
-                            runGuide.classList.toggle("show", show);
-                        }
-                        openRunGuide.addEventListener("click", () => toggleRunGuide(true));
-                        closeRunGuide.addEventListener("click", () => toggleRunGuide(false));
-                        runGuide.addEventListener("click", (event) => {
-                            if (event.target === runGuide) {
-                                toggleRunGuide(false);
-                            }
-                        });
-                        document.addEventListener("keydown", (event) => {
-                            if (event.key === "Escape") {
-                                toggleRunGuide(false);
-                            }
-                        });
                     </script>
                 </body>
                 </html>
@@ -1323,60 +927,15 @@ public class Main {
         if (!project.liveUrl().isBlank()) {
             return """
                     <div class="card-actions">
-                        <a class="local-run" href="%s" target="_blank" rel="noopener">바로 실행</a>
+                        <a class="project-link" href="%s" target="_blank" rel="noopener">바로 실행</a>
                     </div>
                     """.formatted(project.liveUrl());
         }
 
         return """
                 <div class="card-actions">
-                    <button class="local-run" type="button" data-run="%s">바로 실행</button>
+                    <span class="project-status">구현 기록</span>
                 </div>
-                """.formatted(project.id());
-    }
-
-    private static void send(HttpExchange exchange, int status, String body, String contentType) throws IOException {
-        byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
-        Headers headers = exchange.getResponseHeaders();
-        headers.set("Content-Type", contentType);
-        exchange.sendResponseHeaders(status, bytes.length);
-        try (OutputStream output = exchange.getResponseBody()) {
-            output.write(bytes);
-        }
-    }
-
-    private static void applyCors(HttpExchange exchange) {
-        Headers headers = exchange.getResponseHeaders();
-        headers.set("Access-Control-Allow-Origin", "*");
-        headers.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
-        headers.set("Access-Control-Allow-Headers", "Content-Type");
-        headers.set("Access-Control-Allow-Private-Network", "true");
-    }
-
-    private static void sendFile(HttpExchange exchange, Path file, String contentType) throws IOException {
-        if (!Files.exists(file) || !Files.isRegularFile(file)) {
-            exchange.sendResponseHeaders(404, -1);
-            return;
-        }
-        byte[] bytes = Files.readAllBytes(file);
-        Headers headers = exchange.getResponseHeaders();
-        headers.set("Content-Type", contentType);
-        headers.set("Cache-Control", "public, max-age=3600");
-        exchange.sendResponseHeaders(200, bytes.length);
-        try (OutputStream output = exchange.getResponseBody()) {
-            output.write(bytes);
-        }
-    }
-
-    private static String contentType(Path file) {
-        String name = file.getFileName().toString().toLowerCase();
-        if (name.endsWith(".mp3")) return "audio/mpeg";
-        if (name.endsWith(".m4a")) return "audio/mp4";
-        if (name.endsWith(".ogg")) return "audio/ogg";
-        if (name.endsWith(".wav")) return "audio/wav";
-        if (name.endsWith(".png")) return "image/png";
-        if (name.endsWith(".jpg") || name.endsWith(".jpeg")) return "image/jpeg";
-        if (name.endsWith(".svg")) return "image/svg+xml";
-        return "application/octet-stream";
+                """;
     }
 }
