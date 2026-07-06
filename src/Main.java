@@ -245,6 +245,13 @@ public class Main {
         }
     }
 
+    private static void applyCors(HttpExchange exchange) {
+        Headers headers = exchange.getResponseHeaders();
+        headers.set("Access-Control-Allow-Origin", "*");
+        headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        headers.set("Access-Control-Allow-Headers", "Content-Type, Accept");
+    }
+
     private static String filterCategories(Project project) {
         List<String> categories = new ArrayList<>();
         if (project.webProject() || project.type().contains("웹")) {
@@ -1133,10 +1140,13 @@ public class Main {
                     """.formatted(project.liveUrl());
         }
 
+        // Provide a direct run link that points to this server's /run endpoint.
+        // The link uses a relative URL so that clicking it from any client will contact the server
+        // that served the page. handleRun will start the launcher on the server machine.
         return """
                 <div class="card-actions">
-                    <span class="project-status">구현 기록</span>
+                    <a class="project-link" href="/run/%s" target="_blank" rel="noopener">바로 실행</a>
                 </div>
-                """;
+                """.formatted(project.id());
     }
 }
