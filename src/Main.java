@@ -111,6 +111,24 @@ public class Main {
         return "SERVER_IP";
     }
 
+    private static String publicBaseUrl() {
+        // Allow overriding the public host/port when exporting static pages via env vars
+        String host = System.getenv("YAMPF_PUBLIC_HOST");
+        String portEnv = System.getenv("YAMPF_PUBLIC_PORT");
+        if (host == null || host.isBlank() || "SERVER_IP".equals(host)) {
+            host = externalHost();
+        }
+        int port = DEFAULT_PORT;
+        if (portEnv != null && !portEnv.isBlank()) {
+            port = parsePort(portEnv);
+        } else {
+            String envPort = System.getenv("YAMPF_PORT");
+            if (envPort == null || envPort.isBlank()) envPort = System.getenv("PORT");
+            port = parsePort(envPort);
+        }
+        return "http://" + host + ":" + port;
+    }
+
     private static void exportStaticSite() throws IOException {
         Path index = ROOT.resolve("index.html");
         Files.writeString(index, buildHtml(), StandardCharsets.UTF_8);
@@ -1144,8 +1162,8 @@ public class Main {
         // launchers/ directory so users can download it and run locally. For live projects we still link to liveUrl.
         return """
                 <div class="card-actions">
-                    <a class="project-link" href="launchers/%s.bat" download rel="noopener noreferrer">바로 실행</a>
+                    <a class="project-link" href="%s/run/%s" target="_blank" rel="noopener">바로 실행</a>
                 </div>
-                """.formatted(project.id());
+                """.formatted(publicBaseUrl(), project.id());
     }
 }
