@@ -2,6 +2,7 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,6 +15,10 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class Main {
     private static final String HOST = "0.0.0.0";
@@ -57,7 +62,8 @@ public class Main {
         server.createContext("/", Main::handleHome);
         server.createContext("/run", Main::handleRun);
         server.createContext("/launchers", Main::handleLauncher);
-        server.setExecutor(null);
+        server.createContext("/download", Main::handleDownload);
+        server.setExecutor(Executors.newCachedThreadPool());
         server.start();
 
         System.out.println("yampf926 launcher is running on all network interfaces.");
@@ -228,6 +234,142 @@ public class Main {
         try (OutputStream output = exchange.getResponseBody()) {
             output.write(bytes);
         }
+    }
+
+    private static void handleDownload(HttpExchange exchange) throws IOException {
+        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        String id = exchange.getRequestURI().getPath().replaceFirst("^/download/?", "");
+        Project project = PROJECTS.stream()
+                .filter(item -> item.id().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        if (project == null) {
+            send(exchange, 404, "Project not found.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        Path sourceDir = ROOT.resolve(project.folder()).normalize();
+        if (!sourceDir.startsWith(ROOT) || !Files.isDirectory(sourceDir)) {
+            send(exchange, 404, "Project folder not found.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        byte[] bytes = buildProjectZip(project, sourceDir);
+        String fileName = project.id() + "-portable.zip";
+        Headers headers = exchange.getResponseHeaders();
+        headers.set("Content-Type", "application/zip");
+        headers.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        exchange.sendResponseHeaders(200, bytes.length);
+        try (OutputStream output = exchange.getResponseBody()) {
+            output.write(bytes);
+        }
+    }
+
+    private static byte[] buildProjectZip(Project project, Path sourceDir) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        String packageRoot = project.id() + "-portable/";
+
+        try (ZipOutputStream zip = new ZipOutputStream(buffer, StandardCharsets.UTF_8);
+             Stream<Path> paths = Files.walk(sourceDir)) {
+            addZipText(zip, packageRoot + "run.bat", portableRunBat(project));
+            addZipText(zip, packageRoot + "README.txt", portableReadme(project));
+
+            paths
+                    .filter(Files::isRegularFile)
+                    .filter(Main::isPortableFile)
+                    .forEach(path -> {
+                        Path relative = sourceDir.relativize(path);
+                        String entryName = packageRoot + "project/" + relative.toString().replace('\\', '/');
+                        try {
+                            zip.putNextEntry(new ZipEntry(entryName));
+                            Files.copy(path, zip);
+                            zip.closeEntry();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+        } catch (RuntimeException ex) {
+            if (ex.getCause() instanceof IOException io) throw io;
+            throw ex;
+        }
+
+        return buffer.toByteArray();
+    }
+
+    private static boolean isPortableFile(Path path) {
+        String normalized = path.toString().replace('\\', '/').toLowerCase();
+        return !normalized.contains("/out/")
+                && !normalized.contains("/target/")
+                && !normalized.contains("/node_modules/")
+                && !normalized.endsWith(".lock.db")
+                && !normalized.endsWith(".trace.db");
+    }
+
+    private static void addZipText(ZipOutputStream zip, String entryName, String text) throws IOException {
+        zip.putNextEntry(new ZipEntry(entryName));
+        zip.write(text.getBytes(StandardCharsets.UTF_8));
+        zip.closeEntry();
+    }
+
+    private static String portableReadme(Project project) {
+        return """
+                yampf926 portable package
+
+                Project: %s
+
+                1. Extract this ZIP.
+                2. Run run.bat on Windows.
+                3. Java projects require a JDK. Dohwa also requires Node.js and Maven wrapper dependencies.
+                """.formatted(project.title());
+    }
+
+    private static String portableRunBat(Project project) {
+        if ("dohwa".equals(project.id())) {
+            return """
+                    @echo off
+                    chcp 65001 > nul
+                    setlocal
+                    set "PROJECT_DIR=%~dp0project"
+                    cd /d "%PROJECT_DIR%"
+                    echo Starting Dohwa for external access...
+                    powershell -NoProfile -ExecutionPolicy Bypass -File "%PROJECT_DIR%\\scripts\\start-dev.ps1"
+                    pause
+                    """;
+        }
+
+        return """
+                @echo off
+                chcp 65001 > nul
+                setlocal
+                set "PROJECT_DIR=%~dp0project"
+                cd /d "%PROJECT_DIR%"
+                where java > nul 2> nul
+                if errorlevel 1 (
+                    echo Java was not found. Install a JDK and try again.
+                    pause
+                    exit /b 1
+                )
+                where javac > nul 2> nul
+                if errorlevel 1 (
+                    echo javac was not found. A JDK is required.
+                    pause
+                    exit /b 1
+                )
+                if not exist out mkdir out
+                powershell -NoProfile -ExecutionPolicy Bypass -Command "$files = @(Get-ChildItem -Recurse -Path 'src' -Filter '*.java' | ForEach-Object { $_.FullName }); if ($files.Count -eq 0) { Write-Host 'No Java files found.'; exit 2 }; & javac -encoding UTF-8 -d out $files"
+                if errorlevel 1 (
+                    echo Compile failed.
+                    pause
+                    exit /b 1
+                )
+                java -cp "out;src;assets;images;data" Main %*
+                pause
+                """;
     }
 
     private static Path launcherPath(Project project) {
@@ -1150,20 +1292,21 @@ public class Main {
     }
 
     private static String actionHtml(Project project) {
+        String baseUrl = publicBaseUrl();
         if (!project.liveUrl().isBlank()) {
             return """
                     <div class="card-actions">
                         <a class="project-link" href="%s" target="_blank" rel="noopener">바로 실행</a>
+                        <a href="%s/download/%s">ZIP 다운로드</a>
                     </div>
-                    """.formatted(project.liveUrl());
+                    """.formatted(project.liveUrl(), baseUrl, project.id());
         }
 
-        // For static hosting (GitHub Pages), link directly to the launcher .bat file in the repository's
-        // launchers/ directory so users can download it and run locally. For live projects we still link to liveUrl.
         return """
                 <div class="card-actions">
-                    <a class="project-link" href="%s/run/%s" target="_blank" rel="noopener">바로 실행</a>
+                    <a class="project-link" href="%s/download/%s">내 PC용 ZIP 다운로드</a>
+                    <a href="%s/run/%s" target="_blank" rel="noopener">서버 PC에서 실행</a>
                 </div>
-                """.formatted(publicBaseUrl(), project.id());
+                """.formatted(baseUrl, project.id(), baseUrl, project.id());
     }
 }
