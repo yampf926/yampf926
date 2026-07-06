@@ -644,35 +644,6 @@ public class Main {
                             transform: translateY(-2px);
                             background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 143, 203, 0.28));
                         }
-                        .hero-metrics {
-                            display: grid;
-                            grid-template-columns: repeat(3, minmax(0, 1fr));
-                            gap: 12px;
-                            max-width: 720px;
-                            margin-top: 30px;
-                        }
-                        .hero-metric {
-                            min-height: 82px;
-                            padding: 15px 16px;
-                            border: 1px solid rgba(255, 255, 255, 0.22);
-                            border-radius: 8px;
-                            background: rgba(255, 255, 255, 0.12);
-                            backdrop-filter: blur(14px);
-                        }
-                        .hero-metric strong {
-                            display: block;
-                            color: white;
-                            font-size: 24px;
-                            line-height: 1.1;
-                        }
-                        .hero-metric span {
-                            display: block;
-                            margin-top: 7px;
-                            color: rgba(255, 255, 255, 0.76);
-                            font-size: 12px;
-                            font-weight: 900;
-                            line-height: 1.45;
-                        }
                         main {
                             padding: 48px 0 76px;
                         }
@@ -909,103 +880,6 @@ public class Main {
                             font-size: 13px;
                             line-height: 1.45;
                         }
-                        .profile-band {
-                            display: grid;
-                            grid-template-columns: 1fr 1fr;
-                            gap: 20px;
-                            align-items: stretch;
-                        }
-                        .stack-wall,
-                        .work-flow {
-                            border: 1px solid var(--line);
-                            border-radius: 8px;
-                            padding: 22px;
-                            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.86));
-                            box-shadow: 0 12px 28px rgba(117, 96, 181, 0.08);
-                        }
-                        .stack-wall h2,
-                        .work-flow h2 {
-                            font-size: 24px;
-                        }
-                        .stack-wall p,
-                        .work-flow p {
-                            margin: 0 0 16px;
-                            color: var(--muted);
-                            line-height: 1.7;
-                        }
-                        .stack-list {
-                            display: flex;
-                            flex-wrap: wrap;
-                            gap: 9px;
-                        }
-                        .stack-list span {
-                            min-height: 34px;
-                            display: inline-flex;
-                            align-items: center;
-                            border: 1px solid var(--line);
-                            border-radius: 999px;
-                            padding: 7px 12px;
-                            background: white;
-                            color: var(--lavender-ink);
-                            font-size: 13px;
-                            font-weight: 900;
-                        }
-                        .flow-list {
-                            display: grid;
-                            gap: 10px;
-                            margin: 0;
-                            padding: 0;
-                            list-style: none;
-                        }
-                        .flow-list li {
-                            display: grid;
-                            grid-template-columns: 34px minmax(0, 1fr);
-                            gap: 10px;
-                            align-items: center;
-                            min-height: 48px;
-                            border: 1px solid var(--line);
-                            border-radius: 8px;
-                            padding: 10px;
-                            background: rgba(255, 255, 255, 0.88);
-                            color: var(--muted);
-                            line-height: 1.45;
-                        }
-                        .flow-list b {
-                            width: 34px;
-                            height: 34px;
-                            display: grid;
-                            place-items: center;
-                            border-radius: 8px;
-                            background: linear-gradient(135deg, var(--aqua), var(--lavender-deep));
-                            color: white;
-                        }
-                        .project-strip {
-                            display: grid;
-                            grid-template-columns: repeat(4, minmax(0, 1fr));
-                            gap: 12px;
-                            margin: 0 0 24px;
-                        }
-                        .strip-item {
-                            min-height: 92px;
-                            border: 1px solid var(--line);
-                            border-radius: 8px;
-                            padding: 14px;
-                            background: white;
-                            box-shadow: 0 10px 24px rgba(117, 96, 181, 0.08);
-                        }
-                        .strip-item strong {
-                            display: block;
-                            color: var(--ink);
-                            font-size: 15px;
-                            line-height: 1.35;
-                        }
-                        .strip-item span {
-                            display: block;
-                            margin-top: 8px;
-                            color: var(--muted);
-                            font-size: 12px;
-                            line-height: 1.55;
-                        }
                         .grid {
                             display: grid;
                             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1014,7 +888,6 @@ public class Main {
                         .card {
                             --project-color: var(--lavender);
                             min-width: 0;
-                            position: relative;
                             overflow: hidden;
                             display: flex;
                             flex-direction: column;
@@ -1023,11 +896,6 @@ public class Main {
                             background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 242, 255, 0.86));
                             box-shadow: 0 12px 28px rgba(117, 96, 181, 0.08);
                             transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-                        }
-                        .card::before {
-                            content: "";
-                            height: 5px;
-                            background: linear-gradient(90deg, var(--project-color), var(--pink), var(--aqua));
                         }
                         .card:hover {
                             transform: translateY(-7px) scale(1.01);
@@ -1047,7 +915,7 @@ public class Main {
                             background:
                                 radial-gradient(circle at 18%% 22%%, rgba(255, 255, 255, 0.82) 0 10%%, transparent 11%%),
                                 radial-gradient(circle at 72%% 34%%, rgba(255, 255, 255, 0.48) 0 15%%, transparent 16%%),
-                                linear-gradient(135deg, #413266 0%%, var(--project-color) 50%%, #ff8fcb 100%%);
+                                linear-gradient(135deg, #7d5ce1 0%%, #c9b8ff 46%%, #ff8fcb 100%%);
                         }
                         .thumb::after {
                             content: "";
@@ -1177,8 +1045,8 @@ public class Main {
                             width: 100%%;
                             border: 0 !important;
                             outline: 0 !important;
-                            background: linear-gradient(135deg, #47366f 0%%, var(--project-color) 54%%, #ff8fcb 100%%) !important;
-                            background-image: linear-gradient(135deg, #47366f 0%%, var(--project-color) 54%%, #ff8fcb 100%%) !important;
+                            background: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
+                            background-image: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
                             color: white;
                             box-shadow: none !important;
                         }
@@ -1195,8 +1063,8 @@ public class Main {
                         .card a.project-link:hover {
                             border: 0 !important;
                             outline: 0 !important;
-                            background: linear-gradient(135deg, #47366f 0%%, var(--project-color) 54%%, #ff8fcb 100%%) !important;
-                            background-image: linear-gradient(135deg, #47366f 0%%, var(--project-color) 54%%, #ff8fcb 100%%) !important;
+                            background: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
+                            background-image: linear-gradient(135deg, #8064d9 0%%, #9678e6 54%%, #a98bed 100%%) !important;
                             color: white;
                             box-shadow: none !important;
                         }
@@ -1313,9 +1181,7 @@ public class Main {
                         @media (max-width: 1040px) {
                             .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
                             .showcase,
-                            .feature,
-                            .profile-band { grid-template-columns: 1fr; }
-                            .project-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+                            .feature { grid-template-columns: 1fr; }
                             .feature-art { min-height: 180px; }
                             .footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
                         }
@@ -1329,10 +1195,6 @@ public class Main {
                             header { min-height: 340px; }
                             .hero { padding: 58px 0 72px; }
                             h1 { font-size: 38px; }
-                            .hero-metrics,
-                            .project-strip {
-                                grid-template-columns: 1fr;
-                            }
                             .music-panel {
                                 width: min(220px, 100%%);
                             }
@@ -1367,11 +1229,6 @@ public class Main {
                             <div class="hero-actions">
                                 <a href="#projects">프로젝트 보기</a>
                             </div>
-                            <div class="hero-metrics" aria-label="포트폴리오 핵심 지표">
-                                <div class="hero-metric"><strong>8</strong><span>웹, 게임, 데스크톱 앱 프로젝트</span></div>
-                                <div class="hero-metric"><strong>6</strong><span>다운로드 후 직접 실행 가능한 Java 작업</span></div>
-                                <div class="hero-metric"><strong>3</strong><span>React, Spring Boot, Java Swing 중심 기술 축</span></div>
-                            </div>
                         </div>
                     </header>
 
@@ -1392,25 +1249,6 @@ public class Main {
                                     <div class="summary-item"><span>02</span><div><strong>Java 게임</strong><em>스토리, 탈출, 슈팅, 스도쿠, 윷놀이처럼 직접 실행하는 게임</em></div></div>
                                     <div class="summary-item"><span>03</span><div><strong>데스크톱 앱</strong><em>일정과 예산을 관리하는 캘린더/가계부 도구</em></div></div>
                                 </div>
-                            </div>
-                        </section>
-
-                        <section class="profile-band content-section" aria-label="기술 구성과 작업 방식">
-                            <div class="stack-wall">
-                                <h2>기술 구성</h2>
-                                <p>웹 서비스, 데스크톱 GUI, 게임 로직, 파일 저장 구조를 함께 다루며 프로젝트별 실행 결과를 바로 확인할 수 있게 정리했습니다.</p>
-                                <div class="stack-list" aria-label="사용 기술">
-                                    <span>Java</span><span>Swing</span><span>JavaScript</span><span>HTML/CSS</span><span>React</span><span>Vite</span><span>Spring Boot</span><span>JSON</span><span>H2 Database</span><span>GitHub Pages</span>
-                                </div>
-                            </div>
-                            <div class="work-flow">
-                                <h2>작업 포인트</h2>
-                                <p>단순 목록이 아니라 실행, 다운로드, 기술 설명, 상세 기능을 한 화면에서 비교할 수 있도록 구성했습니다.</p>
-                                <ul class="flow-list">
-                                    <li><b>1</b><span>브라우저에서 바로 열리는 웹 프로젝트와 다운로드형 Java 프로젝트를 분리</span></li>
-                                    <li><b>2</b><span>검색과 필터로 프로젝트 유형을 빠르게 확인</span></li>
-                                    <li><b>3</b><span>각 카드에 기술 스택과 상세 구현 흐름을 함께 표기</span></li>
-                                </ul>
                             </div>
                         </section>
 
@@ -1446,12 +1284,6 @@ public class Main {
                                     <li><code>java</code>와 <code>javac</code>가 필요하므로 JDK를 설치해야 합니다.</li>
                                 </ol>
                             </section>
-                            <div class="project-strip" aria-label="프로젝트 구성 포인트">
-                                <div class="strip-item"><strong>Dohwa</strong><span>공연 예매, 팬 게시판, 채팅, 알림 흐름을 갖춘 웹 서비스</span></div>
-                                <div class="strip-item"><strong>Board Game</strong><span>브라우저에서 바로 플레이하는 보드게임 컬렉션</span></div>
-                                <div class="strip-item"><strong>Java Games</strong><span>스토리, 탈출, 슈팅, 스도쿠, 윷놀이를 ZIP으로 제공</span></div>
-                                <div class="strip-item"><strong>Calendar</strong><span>일정과 예산을 JSON으로 저장하는 데스크톱 도구</span></div>
-                            </div>
                             <div class="grid">
                                 __PROJECT_CARDS__
                             </div>
