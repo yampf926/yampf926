@@ -816,9 +816,8 @@ public class Main {
                             width: fit-content;
                             border-radius: 999px;
                             padding: 7px 11px;
-                            color: #6f4b00;
-                            background: linear-gradient(135deg, #fff8d7, var(--gold));
-                            border: 1px solid rgba(255, 213, 106, 0.62);
+                            color: var(--lavender-deep);
+                            background: #fff0fa;
                             font-weight: 900;
                         }
                         .feature-copy h2 {
@@ -865,9 +864,8 @@ public class Main {
                             display: grid;
                             place-items: center;
                             border-radius: 8px;
-                            color: #47366f;
-                            background: linear-gradient(135deg, var(--gold), #fff4bf);
-                            box-shadow: 0 8px 18px rgba(255, 213, 106, 0.34);
+                            color: white;
+                            background: linear-gradient(135deg, var(--lavender-deep), var(--pink));
                             font-weight: 900;
                         }
                         .summary-item strong {
@@ -1099,9 +1097,8 @@ public class Main {
                             margin: 22px 0;
                             padding: 18px 20px;
                             border: 1px solid var(--line);
-                            border-left: 5px solid var(--gold);
                             border-radius: 8px;
-                            background: linear-gradient(135deg, #fffdf4, #fbfaff);
+                            background: #fbfaff;
                             color: var(--lavender-ink);
                             font-size: 13px;
                             line-height: 1.65;
