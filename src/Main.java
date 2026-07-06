@@ -1140,12 +1140,11 @@ public class Main {
                     """.formatted(project.liveUrl());
         }
 
-        // Provide a direct run link that points to this server's /run endpoint.
-        // The link uses a relative URL so that clicking it from any client will contact the server
-        // that served the page. handleRun will start the launcher on the server machine.
+        // For static hosting (GitHub Pages), link directly to the launcher .bat file in the repository's
+        // launchers/ directory so users can download it and run locally. For live projects we still link to liveUrl.
         return """
                 <div class="card-actions">
-                    <a class="project-link" href="/run/%s" target="_blank" rel="noopener">바로 실행</a>
+                    <a class="project-link" href="launchers/%s.bat" download rel="noopener noreferrer">바로 실행</a>
                 </div>
                 """.formatted(project.id());
     }
