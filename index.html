@@ -632,33 +632,6 @@
             font-family: Consolas, monospace;
             font-size: 12px;
         }
-        .next-section {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-            margin: 0 0 24px;
-        }
-        .next-panel {
-            padding: 18px 20px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            background: white;
-            box-shadow: 0 10px 24px rgba(117, 96, 181, 0.08);
-        }
-        .next-panel h3 {
-            margin: 0 0 10px;
-            color: var(--ink);
-            font-size: 18px;
-        }
-        .next-panel ul {
-            margin: 0;
-            padding-left: 18px;
-            color: var(--muted);
-            line-height: 1.7;
-        }
-        .next-panel li {
-            margin: 4px 0;
-        }
         .music-panel {
             width: min(220px, 100%);
             max-width: 100%;
@@ -736,7 +709,6 @@
             .toolbar,
             .stats { grid-template-columns: 1fr; }
             .filters { justify-content: flex-start; }
-            .next-section { grid-template-columns: 1fr; }
             .grid { grid-template-columns: 1fr; }
             .card-actions { grid-template-columns: 1fr; }
             .footer-inner { grid-template-columns: 1fr; }
@@ -819,24 +791,6 @@
                     <li>Windows 보안 경고가 뜨면 추가 정보 후 실행합니다.</li>
                     <li><code>java</code>와 <code>javac</code>가 필요하므로 JDK를 설치해야 합니다.</li>
                 </ol>
-            </section>
-            <section class="next-section" aria-label="추가하면 좋은 부분과 프로젝트 주제">
-                <div class="next-panel">
-                    <h3>더 추가하면 좋은 부분</h3>
-                    <ul>
-                        <li>각 프로젝트별 실행 화면 이미지 또는 짧은 시연 영상</li>
-                        <li>주요 기능, 사용 기술, 담당 구현 범위를 정리한 README</li>
-                        <li>예외 처리, 저장 방식, 테스트 결과처럼 완성도를 보여주는 기록</li>
-                    </ul>
-                </div>
-                <div class="next-panel">
-                    <h3>추천 프로젝트 주제</h3>
-                    <ul>
-                        <li>예약·재고·회원 관리를 다루는 관리자 대시보드</li>
-                        <li>날씨나 공공데이터 API를 활용한 일정 추천 앱</li>
-                        <li>로그인, 검색, 통계가 포함된 학습 기록 관리 서비스</li>
-                    </ul>
-                </div>
             </section>
             <div class="grid">
                 <article class="card" style="--project-color:#c9b8ff" data-title="dohwa 웹사이트" data-type="웹 프로젝트" data-categories="web">
