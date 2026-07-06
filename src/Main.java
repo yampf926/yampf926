@@ -1,12 +1,25 @@
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 public class Main {
+    private static final String HOST = "0.0.0.0";
+    private static final int DEFAULT_PORT = 9260;
     private static final Path ROOT = Path.of("").toAbsolutePath();
+    private static final Path LAUNCHER_DIR = ROOT.resolve("launchers");
 
     private record Project(
             String id,
@@ -34,7 +47,68 @@ public class Main {
     );
 
     public static void main(String[] args) throws IOException {
-        exportStaticSite();
+        if (hasArg(args, "--export-static")) {
+            exportStaticSite();
+            return;
+        }
+
+        int port = port(args);
+        HttpServer server = HttpServer.create(new InetSocketAddress(HOST, port), 0);
+        server.createContext("/", Main::handleHome);
+        server.createContext("/run", Main::handleRun);
+        server.createContext("/launchers", Main::handleLauncher);
+        server.setExecutor(null);
+        server.start();
+
+        System.out.println("yampf926 launcher is running on all network interfaces.");
+        System.out.println("External URL: http://" + externalHost() + ":" + port + "/");
+    }
+
+    private static boolean hasArg(String[] args, String expected) {
+        for (String arg : args) {
+            if (expected.equals(arg)) return true;
+        }
+        return false;
+    }
+
+    private static int port(String[] args) {
+        for (String arg : args) {
+            if (arg.startsWith("--port=")) {
+                return parsePort(arg.substring("--port=".length()));
+            }
+        }
+        String envPort = System.getenv("YAMPF_PORT");
+        if (envPort == null || envPort.isBlank()) envPort = System.getenv("PORT");
+        return parsePort(envPort);
+    }
+
+    private static int parsePort(String value) {
+        if (value == null || value.isBlank()) return DEFAULT_PORT;
+        try {
+            int port = Integer.parseInt(value.trim());
+            if (port > 0 && port <= 65535) return port;
+        } catch (NumberFormatException ignored) {
+        }
+        return DEFAULT_PORT;
+    }
+
+    private static String externalHost() {
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface network = interfaces.nextElement();
+                if (!network.isUp() || network.isLoopback() || network.isVirtual()) continue;
+                Enumeration<InetAddress> addresses = network.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress address = addresses.nextElement();
+                    if (!address.isLoopbackAddress() && address.getHostAddress().indexOf(':') < 0) {
+                        return address.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException ignored) {
+        }
+        return "SERVER_IP";
     }
 
     private static void exportStaticSite() throws IOException {
@@ -42,6 +116,133 @@ public class Main {
         Files.writeString(index, buildHtml(), StandardCharsets.UTF_8);
         System.out.println("Static website exported: " + index);
         System.out.println("Deploy index.html to a static web host.");
+    }
+
+    private static void handleHome(HttpExchange exchange) throws IOException {
+        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        String path = exchange.getRequestURI().getPath();
+        if ("/favicon.png".equals(path)) {
+            sendFile(exchange, ROOT.resolve("favicon.png"), "image/png");
+            return;
+        }
+        if (!"/".equals(path) && !"/index.html".equals(path)) {
+            exchange.sendResponseHeaders(404, -1);
+            return;
+        }
+        send(exchange, 200, buildHtml(), "text/html; charset=UTF-8");
+    }
+
+    private static void handleRun(HttpExchange exchange) throws IOException {
+        applyCors(exchange);
+
+        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+            exchange.sendResponseHeaders(204, -1);
+            return;
+        }
+        if (!"POST".equalsIgnoreCase(exchange.getRequestMethod()) && !"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        String id = exchange.getRequestURI().getPath().replaceFirst("^/run/?", "");
+        Project project = PROJECTS.stream()
+                .filter(item -> item.id().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        if (project == null) {
+            send(exchange, 404, "프로젝트를 찾지 못함.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        Path launcher = launcherPath(project);
+        if (!Files.exists(launcher)) {
+            send(exchange, 404, launcher.getFileName() + " 파일을 찾지 못함.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        new ProcessBuilder("cmd", "/c", "start", "", launcher.toString())
+                .directory(ROOT.toFile())
+                .start();
+
+        send(exchange, 200, """
+                <!DOCTYPE html>
+                <html lang="ko">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>프로젝트 실행</title>
+                </head>
+                <body>
+                    <p>%s 실행 요청을 보냈음.</p>
+                    <p>서버 PC에서 프로그램 창이 열림.</p>
+                </body>
+                </html>
+                """.formatted(project.title()), "text/html; charset=UTF-8");
+    }
+
+    private static void handleLauncher(HttpExchange exchange) throws IOException {
+        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        String fileName = Path.of(exchange.getRequestURI().getPath()).getFileName().toString();
+        if (!fileName.endsWith(".bat")) {
+            send(exchange, 404, "파일을 찾지 못함.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        Path launcher = LAUNCHER_DIR.resolve(fileName).normalize();
+        if (!launcher.startsWith(LAUNCHER_DIR) || !Files.exists(launcher)) {
+            send(exchange, 404, "파일을 찾지 못함.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        byte[] bytes = Files.readAllBytes(launcher);
+        Headers headers = exchange.getResponseHeaders();
+        headers.set("Content-Type", "application/x-bat; charset=UTF-8");
+        headers.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        exchange.sendResponseHeaders(200, bytes.length);
+        try (OutputStream output = exchange.getResponseBody()) {
+            output.write(bytes);
+        }
+    }
+
+    private static Path launcherPath(Project project) {
+        return LAUNCHER_DIR.resolve(project.id() + ".bat");
+    }
+
+    private static void send(HttpExchange exchange, int status, String body, String contentType) throws IOException {
+        byte[] bytes = body == null ? new byte[0] : body.getBytes(StandardCharsets.UTF_8);
+        Headers headers = exchange.getResponseHeaders();
+        if (contentType != null && !contentType.isBlank()) {
+            headers.set("Content-Type", contentType);
+        }
+        exchange.sendResponseHeaders(status, bytes.length);
+        try (OutputStream output = exchange.getResponseBody()) {
+            output.write(bytes);
+        }
+    }
+
+    private static void sendFile(HttpExchange exchange, Path file, String contentType) throws IOException {
+        if (file == null || !Files.exists(file)) {
+            exchange.sendResponseHeaders(404, -1);
+            return;
+        }
+        byte[] bytes = Files.readAllBytes(file);
+        Headers headers = exchange.getResponseHeaders();
+        if (contentType != null && !contentType.isBlank()) {
+            headers.set("Content-Type", contentType);
+        }
+        headers.set("Content-Disposition", "attachment; filename=\"" + file.getFileName().toString() + "\"");
+        exchange.sendResponseHeaders(200, bytes.length);
+        try (OutputStream output = exchange.getResponseBody()) {
+            output.write(bytes);
+        }
     }
 
     private static String filterCategories(Project project) {
