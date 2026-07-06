@@ -63,6 +63,7 @@ public class Main {
         server.createContext("/run", Main::handleRun);
         server.createContext("/launchers", Main::handleLauncher);
         server.createContext("/download", Main::handleDownload);
+        server.createContext("/downloads", Main::handleStaticDownload);
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
 
@@ -261,6 +262,35 @@ public class Main {
 
         byte[] bytes = buildProjectZip(project, sourceDir);
         String fileName = project.id() + "-portable.zip";
+        Headers headers = exchange.getResponseHeaders();
+        headers.set("Content-Type", "application/zip");
+        headers.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        exchange.sendResponseHeaders(200, bytes.length);
+        try (OutputStream output = exchange.getResponseBody()) {
+            output.write(bytes);
+        }
+    }
+
+    private static void handleStaticDownload(HttpExchange exchange) throws IOException {
+        if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+            send(exchange, 405, "Method Not Allowed", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        String fileName = Path.of(exchange.getRequestURI().getPath()).getFileName().toString();
+        if (!fileName.endsWith(".zip")) {
+            send(exchange, 404, "Download not found.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        Path downloadsDir = ROOT.resolve("downloads");
+        Path file = downloadsDir.resolve(fileName).normalize();
+        if (!file.startsWith(downloadsDir) || !Files.exists(file)) {
+            send(exchange, 404, "Download not found.", "text/plain; charset=UTF-8");
+            return;
+        }
+
+        byte[] bytes = Files.readAllBytes(file);
         Headers headers = exchange.getResponseHeaders();
         headers.set("Content-Type", "application/zip");
         headers.set("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
@@ -1292,21 +1322,19 @@ public class Main {
     }
 
     private static String actionHtml(Project project) {
-        String baseUrl = publicBaseUrl();
         if (!project.liveUrl().isBlank()) {
             return """
                     <div class="card-actions">
                         <a class="project-link" href="%s" target="_blank" rel="noopener">바로 실행</a>
-                        <a href="%s/download/%s">ZIP 다운로드</a>
                     </div>
-                    """.formatted(project.liveUrl(), baseUrl, project.id());
+                    """.formatted(project.liveUrl());
         }
 
         return """
                 <div class="card-actions">
-                    <a class="project-link" href="%s/download/%s">내 PC용 ZIP 다운로드</a>
+                    <a class="project-link" href="downloads/%s-portable.zip">내 PC용 ZIP 다운로드</a>
                     <a href="%s/run/%s" target="_blank" rel="noopener">서버 PC에서 실행</a>
                 </div>
-                """.formatted(baseUrl, project.id(), baseUrl, project.id());
+                """.formatted(project.id(), publicBaseUrl(), project.id());
     }
 }
