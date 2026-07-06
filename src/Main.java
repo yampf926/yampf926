@@ -1093,6 +1093,37 @@ public class Main {
                             font-weight: 900;
                             font-size: 13px;
                         }
+                        .run-guide {
+                            margin-top: 14px;
+                            padding: 14px 16px;
+                            border: 1px solid var(--line);
+                            border-radius: 8px;
+                            background: #fbfaff;
+                            color: var(--lavender-ink);
+                            font-size: 12px;
+                            line-height: 1.65;
+                        }
+                        .run-guide strong {
+                            display: block;
+                            margin-bottom: 6px;
+                            font-size: 13px;
+                        }
+                        .run-guide ol {
+                            margin: 0;
+                            padding-left: 18px;
+                        }
+                        .run-guide li {
+                            margin: 3px 0;
+                        }
+                        .run-guide code {
+                            padding: 1px 5px;
+                            border-radius: 5px;
+                            background: white;
+                            border: 1px solid var(--line);
+                            color: var(--lavender-deep);
+                            font-family: Consolas, monospace;
+                            font-size: 12px;
+                        }
                         .music-panel {
                             width: min(220px, 100%%);
                             max-width: 100%%;
@@ -1333,8 +1364,16 @@ public class Main {
         return """
                 <div class="card-actions">
                     <a class="project-link" href="downloads/%s-portable.zip">내 PC용 ZIP 다운로드</a>
-                    <a href="%s/run/%s" target="_blank" rel="noopener">서버 PC에서 실행</a>
                 </div>
-                """.formatted(project.id(), publicBaseUrl(), project.id());
+                <div class="run-guide">
+                    <strong>다운로드 후 실행 방법</strong>
+                    <ol>
+                        <li>ZIP 파일을 내려받고 압축을 풉니다.</li>
+                        <li>풀린 폴더에서 <code>run.bat</code>을 더블클릭합니다.</li>
+                        <li>Windows 보안 경고가 뜨면 추가 정보 후 실행합니다.</li>
+                        <li><code>java</code>와 <code>javac</code>가 필요하므로 JDK를 설치해야 합니다.</li>
+                    </ol>
+                </div>
+                """.formatted(project.id());
     }
 }
