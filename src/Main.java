@@ -41,8 +41,8 @@ public class Main {
     }
 
     private static final List<Project> PROJECTS = List.of(
-            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite와 Spring Boot로 만든 팬 커뮤니티형 웹페이지", "공연 예매, 팬 게시판, 채팅, 알림 흐름을 구성하고 공개 페이지는 정적 데모 API로 실행", "React · Vite · Spring Boot · 정적 데모 API", "src\\Dohwa\\frontend", "#c9b8ff", true, "https://yampf926.github.io/yampf926/dohwa/"),
-            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java HttpServer에서 출발해 브라우저에서 실행되도록 정리한 보드게임 허브", "회원 정보, 게임 선택, 활동 기록을 브라우저 저장소에 보관하며 공개 페이지에서 바로 플레이 가능", "Java HttpServer · HTML · CSS · JavaScript", "src\\Game", "#73d7ff", true, "https://yampf926.github.io/yampf926/boardgame/"),
+            new Project("dohwa", "Dohwa 웹사이트", "웹 프로젝트", "React/Vite와 Spring Boot로 만든 팬 커뮤니티형 웹페이지", "공연 예매, 팬 게시판, 채팅, 알림, 관리자 요약과 데모 결제 안내를 포함하고 공개 페이지는 정적 데모 API로 실행", "React · Vite · Spring Boot · 정적 데모 API", "src\\Dohwa\\frontend", "#c9b8ff", true, "https://yampf926.github.io/yampf926/dohwa/"),
+            new Project("game", "보드게임 컬렉션", "웹 프로젝트", "Java HttpServer에서 출발해 브라우저에서 실행되도록 정리한 보드게임 허브", "게스트 플레이, 분류 필터, 접근성 옵션, 랭킹/활동 기록을 브라우저 저장소에 보관하며 공개 페이지에서 바로 플레이 가능", "Java HttpServer · HTML · CSS · JavaScript", "src\\Game", "#73d7ff", true, "https://yampf926.github.io/yampf926/boardgame/"),
             new Project("choice", "비주얼 노벨 게임", "Java 게임", "이미지와 선택지를 사용하는 스토리 진행형 게임", "scenes.json 장면 데이터와 선택지 분기 흐름을 이용해 사용자가 이야기의 방향을 고르는 구조", "Java Swing · JSON 장면 데이터", "src\\choice", "#ff8fcb", false, ""),
             new Project("escape", "탈출 게임", "Java 게임", "맵, 캐릭터, 아이템 이미지가 있는 탈출형 게임", "방 탐색과 아이템 확인 흐름을 중심으로 만든 데스크톱 게임 프로젝트", "Java Swing · 이미지 리소스", "src\\escape", "#ffd56a", false, ""),
             new Project("shooting", "슈팅 게임", "Java 게임", "키보드 조작으로 플레이하는 슈팅 게임", "플레이어 이동, 발사, 충돌, 점수 흐름을 확인할 수 있는 액션 게임 형태로 정리", "Java Swing · 키보드 이벤트 · Timer", "src\\shootingGame", "#a56dff", false, ""),
